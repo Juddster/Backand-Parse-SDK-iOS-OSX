@@ -40,6 +40,32 @@ static const int PFRESTCommandCacheKeyParseAPIVersion = 2;
 #pragma mark - Init
 ///--------------------------------------
 
++ (instancetype)ba_commandWithHTTPPath:(NSString *)path
+                            httpMethod:(NSString *)httpMethod
+                            parameters:(NSDictionary *)parameters
+                          sessionToken:(NSString *)sessionToken {
+    return [self ba_commandWithHTTPPath:path
+                             httpMethod:httpMethod
+                             parameters:parameters
+                       operationSetUUID:nil
+                           sessionToken:sessionToken];
+}
+
++ (instancetype)ba_commandWithHTTPPath:(NSString *)path
+                            httpMethod:(NSString *)httpMethod
+                            parameters:(NSDictionary *)parameters
+                      operationSetUUID:(NSString *)operationSetIdentifier
+                          sessionToken:(NSString *)sessionToken {
+
+    PFRESTCommand *command = [[self alloc] init];
+    command.httpPath = path;
+    command.httpMethod = httpMethod;
+    command.parameters = parameters;
+    command.operationSetUUID = operationSetIdentifier;
+    command.sessionToken = sessionToken;
+    return command;
+}
+
 + (instancetype)commandWithHTTPPath:(NSString *)path
                          httpMethod:(NSString *)httpMethod
                          parameters:(NSDictionary *)parameters
@@ -56,6 +82,14 @@ static const int PFRESTCommandCacheKeyParseAPIVersion = 2;
                          parameters:(NSDictionary *)parameters
                    operationSetUUID:(NSString *)operationSetIdentifier
                        sessionToken:(NSString *)sessionToken {
+
+#if BACKAND_SERVER
+
+    PFConsistencyAssert(NO, @"REST command for this API has not yet been converted to Backand API.");
+    return nil;
+    
+#else
+
     PFRESTCommand *command = [[self alloc] init];
     command.httpPath = path;
     command.httpMethod = httpMethod;
@@ -63,6 +97,8 @@ static const int PFRESTCommandCacheKeyParseAPIVersion = 2;
     command.operationSetUUID = operationSetIdentifier;
     command.sessionToken = sessionToken;
     return command;
+
+#endif
 }
 
 ///--------------------------------------

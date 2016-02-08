@@ -41,7 +41,7 @@ NS_ASSUME_NONNULL_BEGIN
 
  @return Returns the task encapsulating the work being done.
  */
-+ (BFTask<NSNumber *> *)trackAppOpenedWithLaunchOptions:(nullable NSDictionary *)launchOptions;
++ (BFTask<NSNumber *> *)trackAppOpenedWithLaunchOptions:(nullable NSDictionary *)launchOptions BACKAND_NOT_SUPPORTED_NOP;
 
 /**
  Tracks this application being launched.
@@ -57,7 +57,7 @@ NS_ASSUME_NONNULL_BEGIN
  It should have the following argument signature: `^(BOOL succeeded, NSError *error)`
  */
 + (void)trackAppOpenedWithLaunchOptionsInBackground:(nullable NSDictionary *)launchOptions
-                                              block:(nullable PFBooleanResultBlock)block;
+                                              block:(nullable PFBooleanResultBlock)block BACKAND_NOT_SUPPORTED_NOP;
 
 /**
  Tracks this application being launched. If this happened as the result of the
@@ -71,7 +71,7 @@ NS_ASSUME_NONNULL_BEGIN
 
  @return Returns the task encapsulating the work being done.
  */
-+ (BFTask<NSNumber *> *)trackAppOpenedWithRemoteNotificationPayload:(nullable NSDictionary *)userInfo;
++ (BFTask<NSNumber *> *)trackAppOpenedWithRemoteNotificationPayload:(nullable NSDictionary *)userInfo BACKAND_NOT_SUPPORTED_NOP;
 
 /**
  Tracks this application being launched. If this happened as the result of the
@@ -85,7 +85,7 @@ NS_ASSUME_NONNULL_BEGIN
  It should have the following argument signature: `^(BOOL succeeded, NSError *error)`
  */
 + (void)trackAppOpenedWithRemoteNotificationPayloadInBackground:(nullable NSDictionary *)userInfo
-                                                          block:(nullable PFBooleanResultBlock)block;
+                                                          block:(nullable PFBooleanResultBlock)block BACKAND_NOT_SUPPORTED_NOP;
 
 ///--------------------------------------
 #pragma mark - Custom Analytics
@@ -100,7 +100,7 @@ NS_ASSUME_NONNULL_BEGIN
 
  @return Returns the task encapsulating the work being done.
  */
-+ (BFTask<NSNumber *> *)trackEvent:(NSString *)name;
++ (BFTask<NSNumber *> *)trackEvent:(NSString *)name BACKAND_NOT_SUPPORTED_NOP;
 
 /**
  Tracks the occurrence of a custom event. Parse will store a data point at the
@@ -111,7 +111,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param block The block to execute on server response.
  It should have the following argument signature: `^(BOOL succeeded, NSError *error)`
  */
-+ (void)trackEventInBackground:(NSString *)name block:(nullable PFBooleanResultBlock)block;
++ (void)trackEventInBackground:(NSString *)name block:(nullable PFBooleanResultBlock)block BACKAND_NOT_SUPPORTED_NOP;
 
 /**
  Tracks the occurrence of a custom event with additional dimensions. Parse will
@@ -135,7 +135,7 @@ NS_ASSUME_NONNULL_BEGIN
  @return Returns the task encapsulating the work being done.
  */
 + (BFTask<NSNumber *> *)trackEvent:(NSString *)name
-                        dimensions:(nullable NSDictionary<NSString *, NSString *> *)dimensions;
+                        dimensions:(nullable NSDictionary<NSString *, NSString *> *)dimensions BACKAND_NOT_SUPPORTED_NOP;
 
 /**
  Tracks the occurrence of a custom event with additional dimensions. Parse will
@@ -160,7 +160,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (void)trackEventInBackground:(NSString *)name
                     dimensions:(nullable NSDictionary<NSString *, NSString *> *)dimensions
-                         block:(nullable PFBooleanResultBlock)block;
+                         block:(nullable PFBooleanResultBlock)block BACKAND_NOT_SUPPORTED_NOP;
 
 @end
 

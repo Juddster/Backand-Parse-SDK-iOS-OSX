@@ -54,6 +54,9 @@ static ParseClientConfiguration *currentParseConfiguration_;
 ///--------------------------------------
 
 + (void)setApplicationId:(NSString *)applicationId clientKey:(NSString *)clientKey {
+
+    NSLog(@"This is Parse SDK for Backand!!");
+    
     currentParseConfiguration_.applicationId = applicationId;
     currentParseConfiguration_.clientKey = clientKey;
     currentParseConfiguration_.server = [PFInternalUtils parseServerURLString]; // TODO: (nlutsenko) Clean this up after tests are updated.

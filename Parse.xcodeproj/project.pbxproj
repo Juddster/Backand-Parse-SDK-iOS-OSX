@@ -8552,6 +8552,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F55ABB671B4F39DA00A0ECD5 /* Debug.xcconfig */;
 			buildSettings = {
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 			};
 			name = Debug;
 		};
@@ -8559,6 +8560,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F55ABB681B4F39DA00A0ECD5 /* Release.xcconfig */;
 			buildSettings = {
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 			};
 			name = Release;
 		};

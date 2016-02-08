@@ -44,6 +44,25 @@ static NSString *const PFRESTUserCommandRevocableSessionHeaderEnabledValue = @"1
     return command;
 }
 
++ (instancetype)_ba_commandWithHTTPPath:(NSString *)path
+                             httpMethod:(NSString *)httpMethod
+                             parameters:(NSDictionary *)parameters
+                           sessionToken:(NSString *)sessionToken
+                       revocableSession:(BOOL)revocableSessionEnabled {
+    PFRESTUserCommand *command = [self ba_commandWithHTTPPath:path
+                                                   httpMethod:httpMethod
+                                                   parameters:parameters
+                                                 sessionToken:sessionToken];
+
+    if (revocableSessionEnabled) {
+        command.additionalRequestHeaders = @{ PFRESTUserCommandRevocableSessionHeader :
+                                                  PFRESTUserCommandRevocableSessionHeaderEnabledValue};
+    }
+    command.revocableSessionEnabled = revocableSessionEnabled;
+
+    return command;
+}
+
 ///--------------------------------------
 #pragma mark - Log In
 ///--------------------------------------
@@ -53,7 +72,7 @@ static NSString *const PFRESTUserCommandRevocableSessionHeaderEnabledValue = @"1
                             revocableSession:(BOOL)revocableSessionEnabled {
     NSDictionary *parameters = @{ @"username" : username,
                                   @"password" : password };
-    return [self _commandWithHTTPPath:@"login"
+    return [self _ba_commandWithHTTPPath:@"login"
                            httpMethod:PFHTTPRequestMethodGET
                            parameters:parameters
                          sessionToken:nil

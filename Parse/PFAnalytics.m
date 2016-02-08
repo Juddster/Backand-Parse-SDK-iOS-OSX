@@ -46,6 +46,9 @@
 }
 
 + (BFTask<NSNumber *> *)trackAppOpenedWithRemoteNotificationPayload:(nullable NSDictionary *)userInfo {
+
+    BACKAND_RETURN_NOP_BFTASK(BFTask<NSNumber *>)
+
     return [[[PFUser _getCurrentUserSessionTokenAsync] continueWithBlock:^id(BFTask *task) {
         NSString *sessionToken = task.result;
         PFAnalyticsController *controller = [Parse _currentManager].analyticsController;
@@ -72,6 +75,9 @@
 
 + (BFTask<NSNumber *> *)trackEvent:(NSString *)name
                         dimensions:(nullable NSDictionary<NSString *, NSString *> *)dimensions {
+
+    BACKAND_RETURN_NOP_BFTASK(BFTask<NSNumber *>)
+
     PFParameterAssert([[name stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length],
                       @"A name for the custom event must be provided.");
     [dimensions enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {

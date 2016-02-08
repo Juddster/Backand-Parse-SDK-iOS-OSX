@@ -402,6 +402,63 @@ extern NSString *const _Nonnull PFNetworkNotificationURLResponseUserInfoKey;
  */
 extern NSString *const _Nonnull PFNetworkNotificationURLResponseBodyUserInfoKey;
 
+///--------------------------------------
+#pragma mark - Backand availability Macros
+///--------------------------------------
+
+#ifndef BACKAND_SERVER
+#  define BACKAND_SERVER 1
+#endif
+
+#if BACKAND_SERVER
+
+    #ifndef BACKAND_UNAVAILABLE_WARNING
+    #  define BACKAND_UNAVAILABLE_WARNING _Pragma("GCC error \"This portion of the API is not available on Backand.\"")
+    #endif
+
+    #ifndef BACKAND_UNAVAILABLE
+    #  define BACKAND_UNAVAILABLE(_MSG) __attribute__((unavailable(_MSG)))
+    #endif
+
+    #ifndef BACKAND_NOP
+    #  define BACKAND_NOP(_MSG) __attribute__((deprecated(_MSG)))
+    #endif
+
+    #ifndef BACKAND_RETURN_NOP_BFTASK
+    #  define BACKAND_RETURN_NOP_BFTASK(TASK_TYPE) return [TASK_TYPE taskWithResult:nil];
+    #endif
+
+#else
+
+    #ifndef BACKAND_UNAVAILABLE_WARNING
+    #  define BACKAND_UNAVAILABLE_WARNING
+    #endif
+
+    #ifndef BACKAND_UNAVAILABLE
+    #  define BACKAND_UNAVAILABLE(_MSG)
+    #endif
+
+    #ifndef BACKAND_NOP
+    #  define BACKAND_NOP(_MSG)
+    #endif
+
+    #ifndef BACKAND_RETURN_NOP_BFTASK
+    #  define BACKAND_RETURN_NOP_BFTASK
+    #endif
+
+#endif
+
+#ifndef BACKAND_NOT_SUPPORTED
+#  define BACKAND_NOT_SUPPORTED BACKAND_UNAVAILABLE("Not supported on Backand!")
+#endif
+
+#ifndef BACKAND_NOT_YET_SUPPORTED
+#  define BACKAND_NOT_YET_SUPPORTED BACKAND_UNAVAILABLE("Not *YET* supported on Backand!")
+#endif
+
+#ifndef BACKAND_NOT_SUPPORTED_NOP
+#  define BACKAND_NOT_SUPPORTED_NOP BACKAND_NOP("Not supported on Backand but can safely be ignored.")
+#endif
 
 ///--------------------------------------
 #pragma mark - Deprecated Macros
