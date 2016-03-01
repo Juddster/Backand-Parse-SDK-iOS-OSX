@@ -12,19 +12,25 @@
 #import "PFAssert.h"
 #import "PFHTTPRequest.h"
 #import "PFObjectState.h"
+#import "Parse.h"
 
 @implementation PFRESTObjectCommand
+
++ (NSString *)apiPath
+{
+    return ([Parse usingBackand] ? @"objects" : @"classes");
+}
 
 + (instancetype)fetchObjectCommandForObjectState:(PFObjectState *)state
                                 withSessionToken:(NSString *)sessionToken {
     PFParameterAssert(state.objectId.length, @"objectId should be non nil");
     PFParameterAssert(state.parseClassName.length, @"Class name should be non nil");
 
-    NSString *httpPath = [NSString stringWithFormat:@"classes/%@/%@", state.parseClassName, state.objectId];
-    PFRESTObjectCommand *command = [self commandWithHTTPPath:httpPath
-                                                  httpMethod:PFHTTPRequestMethodGET
-                                                  parameters:nil
-                                                sessionToken:sessionToken];
+    NSString *httpPath = [NSString stringWithFormat:@"%@/%@/%@", [self apiPath], state.parseClassName, state.objectId];
+    PFRESTObjectCommand *command = [self ba_commandWithHTTPPath:httpPath
+                                                     httpMethod:PFHTTPRequestMethodGET
+                                                     parameters:nil
+                                                   sessionToken:sessionToken];
     return command;
 }
 
@@ -34,12 +40,16 @@
                                      sessionToken:(NSString *)sessionToken {
     PFParameterAssert(state.parseClassName.length, @"Class name should be non nil");
 
-    NSString *httpPath = [NSString stringWithFormat:@"classes/%@", state.parseClassName];
-    PFRESTObjectCommand *command = [self commandWithHTTPPath:httpPath
-                                                  httpMethod:PFHTTPRequestMethodPOST
-                                                  parameters:changes
-                                            operationSetUUID:operationSetIdentifier
-                                                sessionToken:sessionToken];
+    NSString *httpPath = [NSString stringWithFormat:@"%@/%@", [self apiPath], state.parseClassName];
+
+    NSString *httpQuery = [Parse usingBackand]? @"returnObject=true&deep=true" : nil;
+    
+    PFRESTObjectCommand *command = [self ba_commandWithHTTPPath:httpPath
+                                                      httpQuery:httpQuery
+                                                     httpMethod:PFHTTPRequestMethodPOST
+                                                     parameters:changes
+                                               operationSetUUID:operationSetIdentifier
+                                                   sessionToken:sessionToken];
     return command;
 }
 
@@ -50,27 +60,32 @@
     PFParameterAssert(state.parseClassName.length, @"Class name should be non nil");
     PFParameterAssert(state.objectId.length, @"objectId should be non nil");
 
-    NSString *httpPath = [NSString stringWithFormat:@"classes/%@/%@", state.parseClassName, state.objectId];
-    PFRESTObjectCommand *command = [self commandWithHTTPPath:httpPath
-                                                  httpMethod:PFHTTPRequestMethodPUT
-                                                  parameters:changes
-                                            operationSetUUID:operationSetIdentifier
-                                                sessionToken:sessionToken];
+    NSString *httpPath = [NSString stringWithFormat:@"%@/%@/%@", [self apiPath], state.parseClassName, state.objectId];
+
+    NSString *httpQuery = [Parse usingBackand]? @"returnObject=true&deep=true" : nil;
+
+    PFRESTObjectCommand *command = [self ba_commandWithHTTPPath:httpPath
+                                                      httpQuery:httpQuery
+                                                     httpMethod:PFHTTPRequestMethodPUT
+                                                     parameters:changes
+                                               operationSetUUID:operationSetIdentifier
+                                                   sessionToken:sessionToken];
     return command;
 }
 
 + (instancetype)deleteObjectCommandForObjectState:(PFObjectState *)state
                                  withSessionToken:(NSString *)sessionToken {
     PFParameterAssert(state.parseClassName.length, @"Class name should be non nil");
+    PFParameterAssert(state.objectId.length || ![Parse usingBackand], @"objectId should be non nil");
 
-    NSMutableString *httpPath = [NSMutableString stringWithFormat:@"classes/%@", state.parseClassName];
+    NSMutableString *httpPath = [NSMutableString stringWithFormat:@"%@/%@", [self apiPath], state.parseClassName];
     if (state.objectId) {
         [httpPath appendFormat:@"/%@", state.objectId];
     }
-    PFRESTObjectCommand *command = [self commandWithHTTPPath:httpPath
-                                                  httpMethod:PFHTTPRequestMethodDELETE
-                                                  parameters:nil
-                                                sessionToken:sessionToken];
+    PFRESTObjectCommand *command = [self ba_commandWithHTTPPath:httpPath
+                                                     httpMethod:PFHTTPRequestMethodDELETE
+                                                     parameters:nil
+                                                   sessionToken:sessionToken];
     return command;
 }
 

@@ -32,6 +32,9 @@ PFLog(PFLogLevelInfo, (tag), (frmt), ##__VA_ARGS__)
 #define PFLogDebug(tag, frmt, ...) \
 PFLog(PFLogLevelDebug, (tag), (frmt), ##__VA_ARGS__)
 
+#define PFLogBackandDebug(tag, frmt, ...) \
+PFLog(PFLogLevelBackandDebug, (tag), (frmt), ##__VA_ARGS__)
+
 #define PFLogException(exception) \
 PFLogError(PFLoggingTagCommon, @"Caught \"%@\" with reason \"%@\"%@", \
 exception.name, exception, \

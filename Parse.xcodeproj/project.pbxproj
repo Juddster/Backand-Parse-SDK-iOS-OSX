@@ -7,6 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		068184AD1C7B6407008CA268 /* BackandHelpers.h in Headers */ = {isa = PBXBuildFile; fileRef = 068184AB1C7B6406008CA268 /* BackandHelpers.h */; };
+		068184AE1C7B6407008CA268 /* BackandHelpers.h in Headers */ = {isa = PBXBuildFile; fileRef = 068184AB1C7B6406008CA268 /* BackandHelpers.h */; };
+		068184AF1C7B6407008CA268 /* BackandHelpers.h in Headers */ = {isa = PBXBuildFile; fileRef = 068184AB1C7B6406008CA268 /* BackandHelpers.h */; };
+		068184B01C7B6407008CA268 /* BackandHelpers.h in Headers */ = {isa = PBXBuildFile; fileRef = 068184AB1C7B6406008CA268 /* BackandHelpers.h */; };
+		068184B11C7B6407008CA268 /* BackandHelpers.h in Headers */ = {isa = PBXBuildFile; fileRef = 068184AB1C7B6406008CA268 /* BackandHelpers.h */; };
+		068184B21C7B6407008CA268 /* BackandHelpers.h in Headers */ = {isa = PBXBuildFile; fileRef = 068184AB1C7B6406008CA268 /* BackandHelpers.h */; };
+		068184B31C7B6407008CA268 /* BackandHelpers.h in Headers */ = {isa = PBXBuildFile; fileRef = 068184AB1C7B6406008CA268 /* BackandHelpers.h */; };
+		068184B41C7B6407008CA268 /* BackandHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 068184AC1C7B6406008CA268 /* BackandHelpers.m */; };
+		068184B51C7B6407008CA268 /* BackandHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 068184AC1C7B6406008CA268 /* BackandHelpers.m */; };
+		068184B61C7B6407008CA268 /* BackandHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 068184AC1C7B6406008CA268 /* BackandHelpers.m */; };
+		068184B71C7B6407008CA268 /* BackandHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 068184AC1C7B6406008CA268 /* BackandHelpers.m */; };
+		068184B81C7B6407008CA268 /* BackandHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 068184AC1C7B6406008CA268 /* BackandHelpers.m */; };
+		068184B91C7B6407008CA268 /* BackandHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 068184AC1C7B6406008CA268 /* BackandHelpers.m */; };
+		068184BA1C7B6407008CA268 /* BackandHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 068184AC1C7B6406008CA268 /* BackandHelpers.m */; };
 		7CBC8DA116D594F800AEC66D /* PFTaskQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CF213BB16D41D980065CF1A /* PFTaskQueue.m */; };
 		8101550A1BB3832700D7C7BD /* PFWeakValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 81C1EE481AE1EF960031C438 /* PFWeakValue.m */; };
 		8101550B1BB3832700D7C7BD /* PFUserState.m in Sources */ = {isa = PBXBuildFile; fileRef = 814BCDF01B4DF63600007B7F /* PFUserState.m */; };
@@ -2920,6 +2934,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		068184AB1C7B6406008CA268 /* BackandHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackandHelpers.h; sourceTree = "<group>"; };
+		068184AC1C7B6406008CA268 /* BackandHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackandHelpers.m; sourceTree = "<group>"; };
 		0925ABEB13D791770095FEFA /* PFConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PFConstants.h; sourceTree = "<group>"; };
 		0925ABEC13D791770095FEFA /* PFConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PFConstants.m; sourceTree = "<group>"; };
 		0925ABED13D791770095FEFA /* PFObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PFObject.h; sourceTree = "<group>"; };
@@ -3741,6 +3757,8 @@
 				09B119FB1488429D002B5594 /* PFGeoPointPrivate.h */,
 				09809FB11434F98C00EC3E74 /* PFInternalUtils.h */,
 				09809FB21434F98C00EC3E74 /* PFInternalUtils.m */,
+				068184AB1C7B6406008CA268 /* BackandHelpers.h */,
+				068184AC1C7B6406008CA268 /* BackandHelpers.m */,
 				813E76981B7A9BD000FA3294 /* PFErrorUtilities.h */,
 				813E76991B7A9BD000FA3294 /* PFErrorUtilities.m */,
 				81D0EE9719B0A2060000AE75 /* PFKeychainStore.h */,
@@ -5200,6 +5218,7 @@
 			files = (
 				8101559F1BB3832700D7C7BD /* PFPinningObjectStore.h in Headers */,
 				810155A01BB3832700D7C7BD /* PFMacros.h in Headers */,
+				068184B21C7B6407008CA268 /* BackandHelpers.h in Headers */,
 				810155A11BB3832700D7C7BD /* PFRESTAnalyticsCommand.h in Headers */,
 				816A646F1C29DA680029B197 /* PFFile+Synchronous.h in Headers */,
 				810155A31BB3832700D7C7BD /* PFHTTPURLRequestConstructor.h in Headers */,
@@ -5438,6 +5457,7 @@
 				815F23751BD04D150054659F /* PFUserConstants.h in Headers */,
 				815F23761BD04D150054659F /* PFInstallationIdentifierStore_Private.h in Headers */,
 				815F23771BD04D150054659F /* PFTaskQueue.h in Headers */,
+				068184B01C7B6407008CA268 /* BackandHelpers.h in Headers */,
 				815F23781BD04D150054659F /* PFLocationManager.h in Headers */,
 				815F23791BD04D150054659F /* PFUserAuthenticationController.h in Headers */,
 				815F237A1BD04D150054659F /* PFUserController.h in Headers */,
@@ -5628,6 +5648,7 @@
 				816AC9BA1A3F48250031D94C /* PFApplication.h in Headers */,
 				F5B0B2EC1B449F1D00F3EBC4 /* BFTask+Private.h in Headers */,
 				F5B0B2ED1B449F1D00F3EBC4 /* PFCategoryLoader.h in Headers */,
+				068184AD1C7B6407008CA268 /* BackandHelpers.h in Headers */,
 				F5B0B2EE1B449F1D00F3EBC4 /* PFThreadsafety.h in Headers */,
 				F5B0B2EF1B449F1D00F3EBC4 /* PFRelationState_Private.h in Headers */,
 				F5B0B2F01B449F1D00F3EBC4 /* ParseInternal.h in Headers */,
@@ -5850,6 +5871,7 @@
 				81C5839A1C3B0A98000063C6 /* PFApplication.h in Headers */,
 				81C5839B1C3B0A98000063C6 /* BFTask+Private.h in Headers */,
 				81C5839C1C3B0A98000063C6 /* PFCategoryLoader.h in Headers */,
+				068184AE1C7B6407008CA268 /* BackandHelpers.h in Headers */,
 				81C5839D1C3B0A98000063C6 /* PFThreadsafety.h in Headers */,
 				81C5839E1C3B0A98000063C6 /* PFRelationState_Private.h in Headers */,
 				81C5839F1C3B0A98000063C6 /* ParseInternal.h in Headers */,
@@ -6088,6 +6110,7 @@
 				81C5851C1C3B0AA1000063C6 /* PFUserConstants.h in Headers */,
 				81C5851D1C3B0AA1000063C6 /* PFInstallationIdentifierStore_Private.h in Headers */,
 				81C5851E1C3B0AA1000063C6 /* PFTaskQueue.h in Headers */,
+				068184B11C7B6407008CA268 /* BackandHelpers.h in Headers */,
 				81C5851F1C3B0AA1000063C6 /* PFLocationManager.h in Headers */,
 				81C585201C3B0AA1000063C6 /* PFUserAuthenticationController.h in Headers */,
 				81C585211C3B0AA1000063C6 /* PFUserController.h in Headers */,
@@ -6251,6 +6274,7 @@
 			files = (
 				81C5864D1C3B0AA9000063C6 /* PFPinningObjectStore.h in Headers */,
 				81C5864E1C3B0AA9000063C6 /* PFMacros.h in Headers */,
+				068184B31C7B6407008CA268 /* BackandHelpers.h in Headers */,
 				81C5864F1C3B0AA9000063C6 /* PFRESTAnalyticsCommand.h in Headers */,
 				81C586501C3B0AA9000063C6 /* PFFile+Synchronous.h in Headers */,
 				81C586511C3B0AA9000063C6 /* PFHTTPURLRequestConstructor.h in Headers */,
@@ -6464,6 +6488,7 @@
 				810749AF1B74662B00682EEB /* PFURLSessionFileDownloadTaskDelegate.h in Headers */,
 				F51D06381B793A110044539E /* PFSQLiteDatabase_Private.h in Headers */,
 				8121457E1AA4A808000B23F5 /* PFRESTSessionCommand.h in Headers */,
+				068184AF1C7B6407008CA268 /* BackandHelpers.h in Headers */,
 				81C7F4AD1AF42BD9007B5418 /* PFMutableQueryState.h in Headers */,
 				81EDD4D31B59A6EC002F69C0 /* PFCommandRunning.h in Headers */,
 				8196D55C1B0AB64B000465A1 /* PFAnalyticsController.h in Headers */,
@@ -7212,6 +7237,7 @@
 				810155201BB3832700D7C7BD /* PFUserAuthenticationController.m in Sources */,
 				810155211BB3832700D7C7BD /* PFRelationState.m in Sources */,
 				810155221BB3832700D7C7BD /* ParseManager.m in Sources */,
+				068184B91C7B6407008CA268 /* BackandHelpers.m in Sources */,
 				810155241BB3832700D7C7BD /* PFAnalyticsController.m in Sources */,
 				810155251BB3832700D7C7BD /* PFURLSessionDataTaskDelegate.m in Sources */,
 				810155261BB3832700D7C7BD /* PFGeoPoint.m in Sources */,
@@ -7433,6 +7459,7 @@
 				815F23221BD04D150054659F /* PFCachedQueryController.m in Sources */,
 				815F23231BD04D150054659F /* PFInstallationConstants.m in Sources */,
 				815F23241BD04D150054659F /* PFOfflineQueryController.m in Sources */,
+				068184B71C7B6407008CA268 /* BackandHelpers.m in Sources */,
 				815F23251BD04D150054659F /* PFLogger.m in Sources */,
 				815F23261BD04D150054659F /* PFHTTPURLRequestConstructor.m in Sources */,
 				815F23271BD04D150054659F /* PFObjectUtilities.m in Sources */,
@@ -7719,6 +7746,7 @@
 				8196D58F1B0BD23B000465A1 /* PFCoreManager.m in Sources */,
 				81BCB4D01B744626006659CB /* PFURLSessionUploadTaskDelegate.m in Sources */,
 				8166FCBA1B503886003841A2 /* PFPin.m in Sources */,
+				068184B41C7B6407008CA268 /* BackandHelpers.m in Sources */,
 				81C3827819CCADA00066284A /* PFMulticastDelegate.m in Sources */,
 				814881571B795CAC008763BF /* PFPropertyInfo_Runtime.m in Sources */,
 				8124C8AE1B27D5D600758E00 /* PFSessionUtilities.m in Sources */,
@@ -7878,6 +7906,7 @@
 				81C582E91C3B0A98000063C6 /* PFCoreManager.m in Sources */,
 				81C582EA1C3B0A98000063C6 /* PFURLSessionUploadTaskDelegate.m in Sources */,
 				81C582EB1C3B0A98000063C6 /* PFPin.m in Sources */,
+				068184B51C7B6407008CA268 /* BackandHelpers.m in Sources */,
 				81C582EC1C3B0A98000063C6 /* PFMulticastDelegate.m in Sources */,
 				81C582ED1C3B0A98000063C6 /* PFPropertyInfo_Runtime.m in Sources */,
 				81C582EE1C3B0A98000063C6 /* PFSessionUtilities.m in Sources */,
@@ -8136,6 +8165,7 @@
 				81C584CA1C3B0AA1000063C6 /* PFCachedQueryController.m in Sources */,
 				81C584CB1C3B0AA1000063C6 /* PFInstallationConstants.m in Sources */,
 				81C584CC1C3B0AA1000063C6 /* PFOfflineQueryController.m in Sources */,
+				068184B81C7B6407008CA268 /* BackandHelpers.m in Sources */,
 				81C584CD1C3B0AA1000063C6 /* PFLogger.m in Sources */,
 				81C584CE1C3B0AA1000063C6 /* PFHTTPURLRequestConstructor.m in Sources */,
 				81C584CF1C3B0AA1000063C6 /* PFObjectUtilities.m in Sources */,
@@ -8202,6 +8232,7 @@
 				81C585DB1C3B0AA9000063C6 /* PFUserAuthenticationController.m in Sources */,
 				81C585DC1C3B0AA9000063C6 /* PFRelationState.m in Sources */,
 				81C585DD1C3B0AA9000063C6 /* ParseManager.m in Sources */,
+				068184BA1C7B6407008CA268 /* BackandHelpers.m in Sources */,
 				81C585DE1C3B0AA9000063C6 /* PFAnalyticsController.m in Sources */,
 				81C585DF1C3B0AA9000063C6 /* PFURLSessionDataTaskDelegate.m in Sources */,
 				81C585E01C3B0AA9000063C6 /* PFGeoPoint.m in Sources */,
@@ -8396,6 +8427,7 @@
 				814881541B795CAC008763BF /* PFPropertyInfo.m in Sources */,
 				81EBF3441B33E7D400991947 /* PFPushController.m in Sources */,
 				8166FCB31B503886003841A2 /* PFOfflineQueryLogic.m in Sources */,
+				068184B61C7B6407008CA268 /* BackandHelpers.m in Sources */,
 				81C9C9FA19FEA89200D514C5 /* PFRESTPushCommand.m in Sources */,
 				81A245901B1E99C6006A6953 /* PFFieldOperation.m in Sources */,
 				81BCB4C71B744626006659CB /* PFURLSessionDataTaskDelegate.m in Sources */,
@@ -8582,6 +8614,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 815F24171BD04D310054659F /* Parse-tvOS.xcconfig */;
 			buildSettings = {
+				PRODUCT_BUNDLE_IDENTIFIER = com.backand.tvos;
 			};
 			name = Debug;
 		};
@@ -8589,6 +8622,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 815F24171BD04D310054659F /* Parse-tvOS.xcconfig */;
 			buildSettings = {
+				PRODUCT_BUNDLE_IDENTIFIER = com.backand.tvos;
 			};
 			name = Release;
 		};
@@ -8624,6 +8658,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F55ABB531B4F39DA00A0ECD5 /* Parse-iOS.xcconfig */;
 			buildSettings = {
+				PRODUCT_BUNDLE_IDENTIFIER = com.backand.ios;
 			};
 			name = Debug;
 		};
@@ -8631,6 +8666,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F55ABB531B4F39DA00A0ECD5 /* Parse-iOS.xcconfig */;
 			buildSettings = {
+				PRODUCT_BUNDLE_IDENTIFIER = com.backand.ios;
 			};
 			name = Release;
 		};
@@ -8638,6 +8674,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 81C582DE1C3B0A40000063C6 /* Parse-iOS-Dynamic.xcconfig */;
 			buildSettings = {
+				PRODUCT_BUNDLE_IDENTIFIER = com.backand.ios;
 			};
 			name = Debug;
 		};
@@ -8645,6 +8682,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 81C582DE1C3B0A40000063C6 /* Parse-iOS-Dynamic.xcconfig */;
 			buildSettings = {
+				PRODUCT_BUNDLE_IDENTIFIER = com.backand.ios;
 			};
 			name = Release;
 		};
@@ -8652,6 +8690,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 81C582DF1C3B0A40000063C6 /* Parse-tvOS-Dynamic.xcconfig */;
 			buildSettings = {
+				PRODUCT_BUNDLE_IDENTIFIER = com.backand.tvos;
 			};
 			name = Debug;
 		};
@@ -8659,6 +8698,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 81C582DF1C3B0A40000063C6 /* Parse-tvOS-Dynamic.xcconfig */;
 			buildSettings = {
+				PRODUCT_BUNDLE_IDENTIFIER = com.backand.tvos;
 			};
 			name = Release;
 		};
@@ -8680,6 +8720,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F55ABB541B4F39DA00A0ECD5 /* Parse-OSX.xcconfig */;
 			buildSettings = {
+				PRODUCT_BUNDLE_IDENTIFIER = com.backand.osx;
 			};
 			name = Debug;
 		};
@@ -8687,6 +8728,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F55ABB541B4F39DA00A0ECD5 /* Parse-OSX.xcconfig */;
 			buildSettings = {
+				PRODUCT_BUNDLE_IDENTIFIER = com.backand.osx;
 			};
 			name = Release;
 		};

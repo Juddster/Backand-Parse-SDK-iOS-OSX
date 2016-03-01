@@ -11,7 +11,7 @@
 #include "Shared/Product/Framework.xcconfig"
 
 PRODUCT_NAME = Parse
-PRODUCT_BUNDLE_IDENTIFIER = com.parse.tvos
+PRODUCT_BUNDLE_IDENTIFIER = com.backand.tvos
 
 MACH_O_TYPE = staticlib
 APPLICATION_EXTENSION_API_ONLY = YES

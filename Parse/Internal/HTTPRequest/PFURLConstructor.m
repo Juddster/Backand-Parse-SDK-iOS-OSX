@@ -19,22 +19,56 @@
 
 + (NSURL *)URLFromAbsoluteString:(NSString *)string
                             path:(nullable NSString *)path
-                           query:(nullable NSString *)query {
-    NSURLComponents *components = [NSURLComponents componentsWithString:string];
-    if (path.length != 0) {
-        NSString *fullPath = (components.path.length ? components.path : @"/");
-        fullPath = [fullPath stringByAppendingPathComponent:path];
-        // If the last character in the provided path is a `/` -> `stringByAppendingPathComponent:` will remove it.
-        // so we need to append it manually to make sure we contruct with the requested behavior.
-        if ([path characterAtIndex:path.length - 1] == '/' &&
-            [fullPath characterAtIndex:fullPath.length - 1] != '/') {
-            fullPath = [fullPath stringByAppendingString:@"/"];
-        }
-        components.path = fullPath;
+                           query:(nullable NSString *)query
+{
+    NSURLComponents *components;
+
+    if ([[path lowercaseString] hasPrefix:@"http"])
+    {
+        components = [NSURLComponents componentsWithString:path];
     }
-    if (query) {
+    else
+    {
+        components = [NSURLComponents componentsWithString:string];
+
+        if (path.length != 0)
+        {
+            if ([path containsString:@"?"])
+            {
+                NSArray *pathComps = [path componentsSeparatedByString:@"?"];
+                path = pathComps[0];
+
+                if (query)
+                {
+                    query = [query stringByAppendingFormat:@"&%@", pathComps[1]];
+                }
+                else
+                {
+                    query = pathComps[1];
+                }
+            }
+
+            NSString *fullPath = (components.path.length ? components.path : @"/");
+            fullPath = [fullPath stringByAppendingPathComponent:path];
+
+            // If the last character in the provided path is a `/` -> `stringByAppendingPathComponent:` will remove it.
+            // so we need to append it manually to make sure we contruct with the requested behavior.
+            if ([path characterAtIndex:path.length - 1] == '/' &&
+                [fullPath characterAtIndex:fullPath.length - 1] != '/')
+            {
+                fullPath = [fullPath stringByAppendingString:@"/"];
+            }
+            
+            components.path = fullPath;
+        }
+    }
+
+
+    if (query)
+    {
         components.query = query;
     }
+    
     return components.URL;
 }
 

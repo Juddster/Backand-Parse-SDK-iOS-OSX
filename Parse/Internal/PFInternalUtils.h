@@ -62,5 +62,4 @@
 + (NSArray *)arrayBySplittingArray:(NSArray *)array withMaximumComponentsPerSegment:(NSUInteger)components;
 
 + (id)_stringWithFormat:(NSString *)format arguments:(NSArray *)arguments;
-
 @end

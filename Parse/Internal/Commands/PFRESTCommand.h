@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface PFRESTCommand : NSObject <PFNetworkCommand>
 
 @property (nonatomic, copy, readonly) NSString *httpPath;
+@property (nonatomic, copy, readonly) NSString *httpQuery;
 @property (nonatomic, copy, readonly) NSString *httpMethod;
 
 @property (nullable, nonatomic, copy, readonly) NSDictionary *parameters;
@@ -32,6 +33,13 @@ NS_ASSUME_NONNULL_BEGIN
 + (instancetype)ba_commandWithHTTPPath:(NSString *)path
                             httpMethod:(NSString *)httpMethod
                             parameters:(nullable NSDictionary *)parameters
+                          sessionToken:(nullable NSString *)sessionToken;
+
++ (instancetype)ba_commandWithHTTPPath:(NSString *)path
+                             httpQuery:(NSString *)query
+                            httpMethod:(NSString *)httpMethod
+                            parameters:(nullable NSDictionary *)parameters
+                      operationSetUUID:(nullable NSString *)operationSetIdentifier
                           sessionToken:(nullable NSString *)sessionToken;
 
 + (instancetype)ba_commandWithHTTPPath:(NSString *)path

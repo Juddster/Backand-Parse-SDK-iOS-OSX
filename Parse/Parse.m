@@ -38,6 +38,8 @@
 static ParseManager *currentParseManager_;
 static ParseClientConfiguration *currentParseConfiguration_;
 
+static NSString *baseApiUrlOverride = nil;
+
 + (void)initialize {
     if (self == [Parse class]) {
         // Load all private categories, that we have...
@@ -53,10 +55,68 @@ static ParseClientConfiguration *currentParseConfiguration_;
 #pragma mark - Connect
 ///--------------------------------------
 
+#if BACKAND_SERVER
+
+/**
+ Set Backand.com AppName.
+
+ @param appName The AppName on Backand.com
+ */
++ (void)setBackandAppName:(NSString *)appName andSignupToken:(NSString *)signupToken
+{
+    currentParseConfiguration_.applicationId = appName;
+    currentParseConfiguration_.clientKey = @"NO CLIENT KEY ON BACKAND";
+    currentParseConfiguration_.backandSignupToken = signupToken;
+    currentParseConfiguration_.server = _BackandDefaultServerURLString;
+
+    if (baseApiUrlOverride)
+    {
+        currentParseConfiguration_.server = baseApiUrlOverride;
+    }
+
+    [self initializeWithConfiguration:currentParseConfiguration_];
+
+    // This is needed to reset LDS's state in between initializations of Parse. We rely on this in the
+    // context of unit tests.
+    currentParseConfiguration_.localDatastoreEnabled = NO;
+
+    [self logVersionInfo];
+}
+
++ (void) logVersionInfo
+{
+    NSLog(@"You are running Parse SDK for Backand! (v%@)", PARSE_VERSION);
+
+    if ([self usingBackand])
+    {
+        if (![currentParseConfiguration_.server isEqualToString:_BackandDefaultServerURLString])
+        {
+            NSLog(@"Backand base API URL: %@", currentParseConfiguration_.server);
+        }
+    }
+    else
+    {
+        NSLog(@"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        NSLog(@"You are still running against Parse.com service.");
+        NSLog(@"To run against Backand's service, please replace the call to [Parse setApplicationId:clientKey:] with a call to [Parse setBackandAppName:andSignupToken:]");
+        NSLog(@"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    }
+}
+
++ (BOOL)usingBackand
+{
+    return [currentParseConfiguration_.server containsString:@"backand.com"];
+}
+
++ (void) setApiBaseURL:(NSString *)apiBaseUrl
+{
+    baseApiUrlOverride = apiBaseUrl;
+}
+
+#endif
+
 + (void)setApplicationId:(NSString *)applicationId clientKey:(NSString *)clientKey {
 
-    NSLog(@"This is Parse SDK for Backand!!");
-    
     currentParseConfiguration_.applicationId = applicationId;
     currentParseConfiguration_.clientKey = clientKey;
     currentParseConfiguration_.server = [PFInternalUtils parseServerURLString]; // TODO: (nlutsenko) Clean this up after tests are updated.
@@ -66,6 +126,8 @@ static ParseClientConfiguration *currentParseConfiguration_;
     // This is needed to reset LDS's state in between initializations of Parse. We rely on this in the
     // context of unit tests.
     currentParseConfiguration_.localDatastoreEnabled = NO;
+
+    [self logVersionInfo];
 }
 
 + (void)initializeWithConfiguration:(ParseClientConfiguration *)configuration {
@@ -112,9 +174,18 @@ static ParseClientConfiguration *currentParseConfiguration_;
     return currentParseManager_.configuration;
 }
 
-+ (NSString *)getApplicationId {
-    PFConsistencyAssert(currentParseManager_,
-                        @"You have to call setApplicationId:clientKey: on Parse to configure Parse.");
++ (NSString *)getApplicationId
+{
+    if ([self usingBackand])
+    {
+        PFConsistencyAssert(currentParseManager_,
+                            @"You have to call setBackandAppName:andSignupToken: on Parse to configure Parse.");
+    }
+    else
+    {
+        PFConsistencyAssert(currentParseManager_,
+                            @"You have to call setApplicationId:clientKey: on Parse to configure Parse.");
+    }
     return currentParseManager_.configuration.applicationId;
 }
 
@@ -122,6 +193,13 @@ static ParseClientConfiguration *currentParseConfiguration_;
     PFConsistencyAssert(currentParseManager_,
                         @"You have to call setApplicationId:clientKey: on Parse to configure Parse.");
     return currentParseManager_.configuration.clientKey;
+}
+
++ (NSString *)getBackandSignupToken
+{
+    PFConsistencyAssert(currentParseManager_,
+                        @"You have to call setBackandAppName:andSignupToken: on Parse to configure Parse.");
+    return currentParseManager_.configuration.backandSignupToken;
 }
 
 ///--------------------------------------

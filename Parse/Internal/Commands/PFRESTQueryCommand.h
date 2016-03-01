@@ -50,7 +50,8 @@ NS_ASSUME_NONNULL_BEGIN
                                            limit:(NSInteger)limit
                                             skip:(NSInteger)skip
                                     extraOptions:(nullable NSDictionary *)extraOptions
-                                  tracingEnabled:(BOOL)trace;
+                                  tracingEnabled:(BOOL)trace
+                                     nestedQuery:(BOOL)nestedQuery;
 
 @end
 

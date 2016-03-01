@@ -18,6 +18,9 @@
 #import "PFErrorUtilities.h"
 #import "PFMacros.h"
 #import "PFURLSessionDataTaskDelegate_Private.h"
+#import "Parse.h"
+#import "BackandHelpers.h"
+#import "PFLogging.h"
 
 @interface PFURLSessionJSONDataTaskDelegate ()
 
@@ -35,17 +38,33 @@
     id result = nil;
 
     NSError *jsonError = nil;
-    if (data) {
-        self.responseString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        result = [NSJSONSerialization JSONObjectWithData:data
-                                                 options:0
-                                                   error:&jsonError];
 
-        if (jsonError && !self.error) {
-            self.error = jsonError;
-            [super _taskDidFinish];
-            return;
+    if (data && data.length > 0) {
+        self.responseString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+
+        if (self.responseString.length > 0)
+        {
+            result = [NSJSONSerialization JSONObjectWithData:data
+                                                     options:0
+                                                       error:&jsonError];
+
+            if (jsonError && !self.error) {
+                self.error = jsonError;
+                [super _taskDidFinish];
+                return;
+            }
         }
+    }
+
+    if (!result)
+    {
+        PFLogBackandDebug(PFLoggingTagCommon, @"NO RESULT");
+        result = @{}; // Backand doesn't always return a result. We return an empty object to make the rest of the code happy
+    }
+
+    if ([Parse usingBackand])
+    {
+        result = [BackandHelpers patchIncomingResponseDataFromBackand:result];
     }
 
     if (self.error) {

@@ -11,12 +11,17 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+#if BACKAND_SERVER
+extern NSString *const _BackandDefaultServerURLString;
+#endif
+
 extern NSString *const _ParseDefaultServerURLString;
 
 @interface ParseClientConfiguration ()
 
 @property (nullable, nonatomic, copy, readwrite) NSString *applicationId;
 @property (nullable, nonatomic, copy, readwrite) NSString *clientKey;
+@property (nullable, nonatomic, copy, readwrite) NSString *backandSignupToken;
 
 @property (nonatomic, copy, readwrite) NSString *server;
 

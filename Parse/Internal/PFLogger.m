@@ -49,6 +49,9 @@
         case PFLogLevelInfo:
             description = @"Info";
             break;
+        case PFLogLevelBackandDebug:
+            description = @"BackandDebug";
+            break;
     }
     return description;
 }

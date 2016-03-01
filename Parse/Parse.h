@@ -75,13 +75,26 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - Connecting to Parse
 ///--------------------------------------
 
+#if BACKAND_SERVER
+
+/**
+ Set Backand.com AppName.
+
+ @param appName The AppName on Backand.com
+ */
++ (void)setBackandAppName:(NSString *)appName andSignupToken:(NSString *)signupToken;
++ (BOOL)usingBackand;
++ (NSString *)getBackandSignupToken;
+
+#endif
+
 /**
  Sets the applicationId and clientKey of your application.
 
  @param applicationId The application id of your Parse application.
  @param clientKey The client key of your Parse application.
  */
-+ (void)setApplicationId:(NSString *)applicationId clientKey:(NSString *)clientKey;
++ (void)setApplicationId:(NSString *)applicationId clientKey:(NSString *)clientKey BACKAND_NOT_SUPPORTED;
 
 /**
  Sets the configuration to be used for the Parse SDK.

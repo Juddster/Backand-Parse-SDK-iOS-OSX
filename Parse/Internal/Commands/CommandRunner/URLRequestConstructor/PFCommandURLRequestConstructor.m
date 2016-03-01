@@ -49,7 +49,7 @@
     return (BFTask *)[[self _getURLRequestHeadersAsyncForCommand:command] continueWithSuccessBlock:^id(BFTask<NSDictionary *> *task) {
         NSURL *url = [PFURLConstructor URLFromAbsoluteString:self.serverURL.absoluteString
                                                         path:command.httpPath
-                                                       query:nil];
+                                                       query:command.httpQuery];
         NSDictionary *headers = task.result;
 
         NSString *requestMethod = command.httpMethod;
@@ -153,13 +153,18 @@
         NSMutableDictionary *headers = [NSMutableDictionary dictionary];
         [headers addEntriesFromDictionary:command.additionalRequestHeaders];
         if (command.sessionToken) {
-            headers[PFCommandHeaderNameSessionToken] = command.sessionToken;
+            headers[[self sessionTokenHeaderName]] = command.sessionToken;
         }
         return [[self.dataSource.installationIdentifierStore getInstallationIdentifierAsync] continueWithSuccessBlock:^id(BFTask <NSString *>*task) {
             headers[PFCommandHeaderNameInstallationId] = task.result;
             return [headers copy];
         }];
     }];
+}
+
+- (NSString *) sessionTokenHeaderName
+{
+    return ([Parse usingBackand] ? PFCommandHeaderNameAuthorization : PFCommandHeaderNameSessionToken);
 }
 
 @end

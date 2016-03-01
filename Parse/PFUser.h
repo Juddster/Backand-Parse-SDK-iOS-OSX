@@ -88,7 +88,7 @@ typedef void(^PFUserLogoutResultBlock)(NSError *_Nullable error);
  @warning `PFObject.-saveEventually` will not work on if an item being saved has a relation
  to an automatic user that has never been saved.
  */
-+ (void)enableAutomaticUser;
++ (void)enableAutomaticUser BACKAND_NOT_SUPPORTED;
 
 /**
  The username for the `PFUser`.

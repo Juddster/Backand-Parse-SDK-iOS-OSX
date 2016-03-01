@@ -14,6 +14,7 @@
 @property (nonatomic, copy, readwrite) NSString *sessionToken;
 
 @property (nonatomic, copy, readwrite) NSString *httpPath;
+@property (nonatomic, copy, readwrite) NSString *httpQuery;
 @property (nonatomic, copy, readwrite) NSString *httpMethod;
 
 @property (nonatomic, copy, readwrite) NSDictionary *parameters;

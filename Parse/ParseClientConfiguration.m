@@ -17,6 +17,10 @@
 #import "PFHash.h"
 #import "PFObjectUtilities.h"
 
+#if BACKAND_SERVER
+NSString *const _BackandDefaultServerURLString = @"https://api.backand.com/1";
+#endif
+
 NSString *const _ParseDefaultServerURLString = @"https://api.parse.com/1";
 
 @implementation ParseClientConfiguration
@@ -69,6 +73,12 @@ NSString *const _ParseDefaultServerURLString = @"https://api.parse.com/1";
     _clientKey = [clientKey copy];
 }
 
+- (void)setBackandSignupToken:(NSString *)backandSignupToken
+{
+    PFParameterAssert(backandSignupToken.length, @"'backandSignupToken' should not be nil.");
+    _backandSignupToken = [backandSignupToken copy];
+}
+
 - (void)setServer:(NSString *)server {
     PFParameterAssert(server.length, @"Server should not be `nil`.");
     PFParameterAssert([NSURL URLWithString:server], @"Server should be a valid URL.");
@@ -113,6 +123,7 @@ NSString *const _ParseDefaultServerURLString = @"https://api.parse.com/1";
     ParseClientConfiguration *other = object;
     return ([PFObjectUtilities isObject:self.applicationId equalToObject:other.applicationId] &&
             [PFObjectUtilities isObject:self.clientKey equalToObject:other.clientKey] &&
+            [PFObjectUtilities isObject:self.backandSignupToken equalToObject:other.backandSignupToken] &&
             [self.server isEqualToString:other.server] &&
             self.localDatastoreEnabled == other.localDatastoreEnabled &&
             [PFObjectUtilities isObject:self.applicationGroupIdentifier equalToObject:other.applicationGroupIdentifier] &&
@@ -129,6 +140,7 @@ NSString *const _ParseDefaultServerURLString = @"https://api.parse.com/1";
         // Use direct assignment to skip over all of the assertions that may fail if we're not fully initialized yet.
         configuration->_applicationId = [self->_applicationId copy];
         configuration->_clientKey = [self->_clientKey copy];
+        configuration->_backandSignupToken = [self->_backandSignupToken copy];
         configuration->_server = [self.server copy];
         configuration->_localDatastoreEnabled = self->_localDatastoreEnabled;
         configuration->_applicationGroupIdentifier = [self->_applicationGroupIdentifier copy];

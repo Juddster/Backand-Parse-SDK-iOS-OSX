@@ -28,7 +28,7 @@ NSUInteger const PFRESTObjectBatchCommandSubcommandsLimit = 50;
     for (PFRESTCommand *command in commands) {
         NSURL *commandURL = [PFURLConstructor URLFromAbsoluteString:serverURL.absoluteString
                                                                path:command.httpPath
-                                                              query:nil];
+                                                              query:command.httpQuery];
         NSMutableDictionary *requestDictionary = [@{ @"method" : command.httpMethod,
                                                      @"path" : commandURL.path } mutableCopy];
         if (command.parameters) {

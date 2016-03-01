@@ -9,6 +9,8 @@
 
 #import <Foundation/Foundation.h>
 
+extern NSString *const PFHTTPURLRequestContentTypeFormUrlEncoded;
+
 @interface PFHTTPURLRequestConstructor : NSObject
 
 + (NSMutableURLRequest *)urlRequestWithURL:(NSURL *)url

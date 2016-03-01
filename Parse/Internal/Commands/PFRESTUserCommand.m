@@ -11,6 +11,10 @@
 
 #import "PFAssert.h"
 #import "PFHTTPRequest.h"
+#import "Parse.h"
+#import "Parse_Private.h"
+#import "ParseManager.h"
+#import "PFHTTPURLRequestConstructor.h"
 
 static NSString *const PFRESTUserCommandRevocableSessionHeader = @"X-Parse-Revocable-Session";
 static NSString *const PFRESTUserCommandRevocableSessionHeaderEnabledValue = @"1";
@@ -44,7 +48,7 @@ static NSString *const PFRESTUserCommandRevocableSessionHeaderEnabledValue = @"1
     return command;
 }
 
-+ (instancetype)_ba_commandWithHTTPPath:(NSString *)path
++ (instancetype)ba_commandWithHTTPPath:(NSString *)path
                              httpMethod:(NSString *)httpMethod
                              parameters:(NSDictionary *)parameters
                            sessionToken:(NSString *)sessionToken
@@ -70,13 +74,44 @@ static NSString *const PFRESTUserCommandRevocableSessionHeaderEnabledValue = @"1
 + (instancetype)logInUserCommandWithUsername:(NSString *)username
                                     password:(NSString *)password
                             revocableSession:(BOOL)revocableSessionEnabled {
-    NSDictionary *parameters = @{ @"username" : username,
-                                  @"password" : password };
-    return [self _ba_commandWithHTTPPath:@"login"
-                           httpMethod:PFHTTPRequestMethodGET
-                           parameters:parameters
-                         sessionToken:nil
-                     revocableSession:revocableSessionEnabled];
+
+    if ([Parse usingBackand])
+    {
+        NSDictionary *parameters = @{ @"username" : username,
+                                      @"password" : password,
+                                      @"grant_type" : @"password",
+                                      @"appName" : [Parse getApplicationId]};
+
+        NSString *baseUrl = [Parse _currentManager].configuration.server;
+        
+        if ([baseUrl hasSuffix:@"/1"])
+        {
+            baseUrl = [baseUrl substringToIndex:(baseUrl.length - 2)];
+        }
+
+        NSString *loginUrl = [NSString stringWithFormat:@"%@/token", baseUrl];
+
+        PFRESTUserCommand *command = [self ba_commandWithHTTPPath:loginUrl
+                                                        httpMethod:PFHTTPRequestMethodPOST
+                                                        parameters:parameters
+                                                      sessionToken:nil
+                                                  revocableSession:revocableSessionEnabled];
+
+        command.additionalRequestHeaders = @{ PFHTTPRequestHeaderNameContentType :
+                                                  PFHTTPURLRequestContentTypeFormUrlEncoded};
+
+        return command;
+    }
+    else
+    {
+        NSDictionary *parameters = @{ @"username" : username,
+                                      @"password" : password };
+        return [self ba_commandWithHTTPPath:@"login"
+                                  httpMethod:PFHTTPRequestMethodGET
+                                  parameters:parameters
+                                sessionToken:nil
+                            revocableSession:revocableSessionEnabled];
+    }
 }
 
 + (instancetype)serviceLoginUserCommandWithAuthenticationType:(NSString *)authenticationType
@@ -105,11 +140,33 @@ static NSString *const PFRESTUserCommandRevocableSessionHeaderEnabledValue = @"1
 + (instancetype)signUpUserCommandWithParameters:(NSDictionary *)parameters
                                revocableSession:(BOOL)revocableSessionEnabled
                                    sessionToken:(NSString *)sessionToken {
-    return [self _commandWithHTTPPath:@"users"
-                           httpMethod:PFHTTPRequestMethodPOST
-                           parameters:parameters
-                         sessionToken:sessionToken
-                     revocableSession:revocableSessionEnabled];
+
+    if ([Parse usingBackand])
+    {
+        NSDictionary *ba_parameters = @{ @"firstName" : parameters[@"username"],
+                                         @"lastName": parameters[@"username"],
+                                         @"email": parameters[@"email"],
+                                         @"password" : parameters[@"password"],
+                                         @"confirmPassword" : parameters[@"password"]};
+
+        PFRESTUserCommand *command = [self ba_commandWithHTTPPath:@"user/signup"
+                                                       httpMethod:PFHTTPRequestMethodPOST
+                                                       parameters:ba_parameters
+                                                     sessionToken:sessionToken
+                                                 revocableSession:revocableSessionEnabled];
+
+        command.additionalRequestHeaders = @{ @"SignUpToken" : [Parse getBackandSignupToken]};
+
+        return command;
+    }
+    else
+    {
+        return [self ba_commandWithHTTPPath:@"users"
+                                 httpMethod:PFHTTPRequestMethodPOST
+                                 parameters:parameters
+                               sessionToken:sessionToken
+                           revocableSession:revocableSessionEnabled];
+    }
 }
 
 ///--------------------------------------

@@ -11,7 +11,7 @@
 #include "Shared/Product/Framework.xcconfig"
 
 PRODUCT_NAME = Parse
-PRODUCT_BUNDLE_IDENTIFIER = com.parse.tvos
+PRODUCT_BUNDLE_IDENTIFIER = com.backand.tvos
 DEFINES_MODULE = YES
 
 MACH_O_TYPE = mh_dylib

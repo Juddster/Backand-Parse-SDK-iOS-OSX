@@ -40,25 +40,62 @@ static const int PFRESTCommandCacheKeyParseAPIVersion = 2;
 #pragma mark - Init
 ///--------------------------------------
 
+#if BACKAND_SERVER
+
 + (instancetype)ba_commandWithHTTPPath:(NSString *)path
                             httpMethod:(NSString *)httpMethod
                             parameters:(NSDictionary *)parameters
-                          sessionToken:(NSString *)sessionToken {
-    return [self ba_commandWithHTTPPath:path
-                             httpMethod:httpMethod
-                             parameters:parameters
-                       operationSetUUID:nil
-                           sessionToken:sessionToken];
+                          sessionToken:(NSString *)sessionToken
+{
+    return [self _commandWithHTTPPath:path
+                            httpQuery:nil
+                           httpMethod:httpMethod
+                           parameters:parameters
+                     operationSetUUID:nil
+                         sessionToken:sessionToken];
+}
+
++ (instancetype)ba_commandWithHTTPPath:(NSString *)path
+                             httpQuery:(NSString *)query
+                            httpMethod:(NSString *)httpMethod
+                            parameters:(nullable NSDictionary *)parameters
+                      operationSetUUID:(nullable NSString *)operationSetIdentifier
+                          sessionToken:(nullable NSString *)sessionToken
+{
+    return [self _commandWithHTTPPath:path
+                            httpQuery:query
+                           httpMethod:httpMethod
+                           parameters:parameters
+                     operationSetUUID:nil
+                         sessionToken:sessionToken];
 }
 
 + (instancetype)ba_commandWithHTTPPath:(NSString *)path
                             httpMethod:(NSString *)httpMethod
                             parameters:(NSDictionary *)parameters
                       operationSetUUID:(NSString *)operationSetIdentifier
-                          sessionToken:(NSString *)sessionToken {
+                          sessionToken:(NSString *)sessionToken
+{
+    return [self _commandWithHTTPPath:path
+                            httpQuery:nil
+                           httpMethod:httpMethod
+                           parameters:parameters
+                     operationSetUUID:operationSetIdentifier
+                         sessionToken:sessionToken];
+}
 
+#endif
+
++ (instancetype)_commandWithHTTPPath:(NSString *)path
+                           httpQuery:(NSString *)query
+                          httpMethod:(NSString *)httpMethod
+                          parameters:(NSDictionary *)parameters
+                    operationSetUUID:(NSString *)operationSetIdentifier
+                        sessionToken:(NSString *)sessionToken
+{
     PFRESTCommand *command = [[self alloc] init];
     command.httpPath = path;
+    command.httpQuery = query;
     command.httpMethod = httpMethod;
     command.parameters = parameters;
     command.operationSetUUID = operationSetIdentifier;
@@ -69,7 +106,8 @@ static const int PFRESTCommandCacheKeyParseAPIVersion = 2;
 + (instancetype)commandWithHTTPPath:(NSString *)path
                          httpMethod:(NSString *)httpMethod
                          parameters:(NSDictionary *)parameters
-                       sessionToken:(NSString *)sessionToken {
+                       sessionToken:(NSString *)sessionToken
+{
     return [self commandWithHTTPPath:path
                           httpMethod:httpMethod
                           parameters:parameters
@@ -81,24 +119,17 @@ static const int PFRESTCommandCacheKeyParseAPIVersion = 2;
                          httpMethod:(NSString *)httpMethod
                          parameters:(NSDictionary *)parameters
                    operationSetUUID:(NSString *)operationSetIdentifier
-                       sessionToken:(NSString *)sessionToken {
+                       sessionToken:(NSString *)sessionToken
+{
 
-#if BACKAND_SERVER
+    PFConsistencyAssert(![Parse usingBackand], @"The REST command for this API has not yet been converted to Backand API.");
 
-    PFConsistencyAssert(NO, @"REST command for this API has not yet been converted to Backand API.");
-    return nil;
-    
-#else
-
-    PFRESTCommand *command = [[self alloc] init];
-    command.httpPath = path;
-    command.httpMethod = httpMethod;
-    command.parameters = parameters;
-    command.operationSetUUID = operationSetIdentifier;
-    command.sessionToken = sessionToken;
-    return command;
-
-#endif
+    return [self _commandWithHTTPPath:path
+                            httpQuery:nil
+                           httpMethod:httpMethod
+                           parameters:parameters
+                     operationSetUUID:operationSetIdentifier
+                         sessionToken:sessionToken];
 }
 
 ///--------------------------------------
@@ -172,6 +203,10 @@ static const int PFRESTCommandCacheKeyParseAPIVersion = 2;
 }
 
 #pragma mark Local Identifiers
+
+//JF-TODO: Need to look into this some more...!
+// Specifically, what's the localId of an object and of a command and
+// Does it have any implications on the port to Backand
 
 /**
  If this was the second save on a new object while offline, then its objectId

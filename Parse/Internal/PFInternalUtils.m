@@ -46,7 +46,7 @@ static NSString *parseServer_;
 
 + (void)initialize {
     if (self == [PFInternalUtils class]) {
-        [self setParseServer:_ParseDefaultServerURLString];
+        [self setParseServer:_ParseDefaultServerURLString]; //JF-TODO:make backand the defualt
     }
 }
 

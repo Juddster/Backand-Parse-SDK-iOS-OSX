@@ -19,6 +19,7 @@
 #import "PFURLSessionJSONDataTaskDelegate.h"
 #import "PFURLSessionUploadTaskDelegate.h"
 #import "PFURLSessionFileDownloadTaskDelegate.h"
+#import "PFLogging.h"
 
 typedef void (^PFURLSessionTaskCompletionHandler)(NSData *data, NSURLResponse *response, NSError *error);
 
@@ -173,6 +174,14 @@ typedef void (^PFURLSessionTaskCompletionHandler)(NSData *data, NSURLResponse *r
 
         BFTask *resultTask = [delegate.resultTask continueWithBlock:^id(BFTask *task) {
             @strongify(self);
+
+            PFLogBackandDebug(PFLoggingTagCommon, @"Response for:%@ %@", dataTask.originalRequest.HTTPMethod, dataTask.originalRequest.URL);
+            if ([dataTask.originalRequest.HTTPMethod isEqualToString: @"POST"] || [dataTask.originalRequest.HTTPMethod isEqualToString: @"PUT"])
+            {
+                PFLogBackandDebug(PFLoggingTagCommon, @"REQUEST DATA:%@",[[NSString alloc] initWithData: dataTask.originalRequest.HTTPBody encoding:NSUTF8StringEncoding]);
+            }
+            PFLogBackandDebug(PFLoggingTagCommon, @"RESPONSE DATA:%@", delegate.responseString);
+
             [self.delegate urlSession:self
                  didPerformURLRequest:dataTask.originalRequest
                       withURLResponse:delegate.response

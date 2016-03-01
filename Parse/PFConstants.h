@@ -13,7 +13,7 @@
 #pragma mark - SDK Version
 ///--------------------------------------
 
-#define PARSE_VERSION @"1.12.0"
+#define PARSE_VERSION @"0.1.0"
 
 ///--------------------------------------
 #pragma mark - Platform
@@ -108,7 +108,11 @@ typedef NS_ENUM(uint8_t, PFLogLevel) {
      - Informational messages
      - Debug messages
      */
-    PFLogLevelDebug = 4
+    PFLogLevelDebug = 4,
+
+
+    // This will be the ultimate most spewee log level. Be careful what you wish for... :)
+    PFLogLevelBackandDebug
 };
 
 ///--------------------------------------
@@ -410,6 +414,10 @@ extern NSString *const _Nonnull PFNetworkNotificationURLResponseBodyUserInfoKey;
 #  define BACKAND_SERVER 1
 #endif
 
+#ifndef BACKAND_COMPILE_ERROR_FOR_UNSUPPORTED
+#  define BACKAND_COMPILE_ERROR_FOR_UNSUPPORTED 0
+#endif
+
 #if BACKAND_SERVER
 
     #ifndef BACKAND_UNAVAILABLE_WARNING
@@ -417,7 +425,11 @@ extern NSString *const _Nonnull PFNetworkNotificationURLResponseBodyUserInfoKey;
     #endif
 
     #ifndef BACKAND_UNAVAILABLE
-    #  define BACKAND_UNAVAILABLE(_MSG) __attribute__((unavailable(_MSG)))
+    #  if BACKAND_COMPILE_ERROR_FOR_UNSUPPORTED
+    #    define BACKAND_UNAVAILABLE(_MSG) __attribute__((unavailable(_MSG)))
+    #  else
+    #    define BACKAND_UNAVAILABLE(_MSG) __attribute__((deprecated(_MSG)))
+    #  endif
     #endif
 
     #ifndef BACKAND_NOP
