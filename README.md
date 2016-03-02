@@ -12,12 +12,13 @@ For more information on Backand and its features, see [the website][Backand.com]
 To use parse, head on over to the [releases][releases] page, and download the latest build.
 
 ###Migrating an existing project from Parse to Backand
-1. Replace the existing Parse.framework in your project with the one you downloaded above.
+1. Replace the existing `Parse.framework` in your project with the one you downloaded above.
 At this point, if you build and run your app, everything should be the same as with the original Parse.framework. It is still running against Parse.com's backend. The only difference you should see is a message in the debug console confirming that you are now using the Parse SDK for Backand.
 2. In your app delegate, replace the call to `[Parse setApplicationId:clientKey:]` with a call to `[Parse setBackandAppName:andSignupToken:]`  (you can obtain these from your Backand app).
 3. There is no step 3! You are all set.
 
 **Note:** You'll want to migrate your app/database from Parse.com to Backand.com. See [migration instructions][migration]
+
 **Note:** Although we completed a significant subset of the SDK, certainly there are areas that are not yet working. For most of the scenarios that are not supported yet, an exception is raised so you can't miss it. Please refer to the [comparison doc][comparison] for up to date info on our progress
 
 ###New projects
@@ -29,7 +30,7 @@ At this point, if you build and run your app, everything should be the same as w
 
 Please refer to the [Backand iOS SDK documentation][ios SDK documentation] for further info.
 
-**Note:** You'll need to create an app in the Backand UI as well as define the databse tables as needed for your app. Inlike Parse, Backand doesn't support building the schema on the fly.
+**Note:** You'll need to create an app in the Backand UI as well as define the databse tables as needed for your app. Unlike Parse, Backand doesn't support building the schema on the fly.
 
 ###Other Installation Options
 
