@@ -1,44 +1,37 @@
 # Parse SDK for iOS/OS X/watchOS/tvOS
 
-![Platforms][platforms-svg]
 [![License][license-svg]][license-link]
 
-[![Podspec][podspec-svg]][podspec-link]
-[![Carthage compatible][carthage-svg]](carthage-link)
-[![Dependencies][dependencies-svg]][dependencies-link]
-[![References][references-svg]][references-link]
+This SDK has been forked from the Parse SDK. It has been modified to access Backand's backend service instead of the Parse backend. Our intention is to maintain source level compatibility with the original Parse SDK and preserve as much functionality as possible. Our goal is to minimize code changes for projects that are migrating from Parse to Backand.
 
-[![Build Status][build-status-svg]][build-status-link]
-[![Coverage Status][coverage-status-svg]][coverage-status-link]
-
-[![Join Chat][gitter-svg]][gitter-link]
-
-A library that gives you access to the powerful Parse cloud platform from your iOS or OS X app.
-For more information Parse and its features, see [the website][parse.com] and [getting started][docs].
+This is a library that gives you access to the Backand cloud platform from your iOS or OS X app.
+For more information on Backand and its features, see [the website][Backand.com] and [getting started][docs].
 
 ## Getting Started
 
 To use parse, head on over to the [releases][releases] page, and download the latest build.
-And you're off! Take a look at the public [documentation][docs] and start building.
 
-**Other Installation Options**
+###Migrating an existing project from Parse to Backand
+1. Replace the existing Parse.framework in your project with the one you downloaded above.
+At this point, if you build and run your app, everything should be the same as with the original Parse.framework. It is still running against Parse.com's backend. The only difference you should see is a message in the debug console confirming that you are now using the Parse SDK for Backand.
+2. In your app delegate, replace the call to `[Parse setApplicationId:clientKey:]` with a call to `[Parse setBackandAppName:andSignupToken:]`  (you can obtain these from your Backand app).
+3. There is no step 3! You are all set.
 
- - **[CocoaPods](https://cocoapods.org)**
- 
-   Add the following line to your Podfile:
-   ```ruby
-   pod 'Parse'
-   ```
-   Run `pod install`, and you should now have the latest parse release.
-    
-    
- - **[Carthage](https://github.com/carthage/carthage)**
- 
-   Add the following line to your Cartfile:
-   ```
-   github "ParsePlatform/Parse-SDK-iOS-OSX"
-   ```
-   Run `carthage update`, and you should now have the latest version of Parse SDK in your Carthage folder.
+**Note:** You'll want to migrate your app/database from Parse.com to Backand.com. See [migration instructions][migration]
+**Note:** Although we completed a significant subset of the SDK, certainly there are areas that are not yet working. For most of the scenarios that are not supported yet, an exception is raised so you can't miss it. Please refer to the [comparison doc][comparison] for up to date info on our progress
+
+###New projects
+1. Add the frameworks `Parse` and `Bolts` that you downloaded above to your project.
+2. Additionally, add the frameworks: `SystemConfiguration`, `AudioToolbox` & `libsqlite3`
+3. In your AppDelegate `#import <Parse/Parse.h>` 
+4. In your `application:didFinishLaunchingWithOptions:` add a call to `[Parse setBackandAppName:andSignupToken:]`  (you can obtain these from your Backand app).
+5. You're all set. Run your app and you'll see in the debug console a message confirming that you are now using the Parse SDK for Backand.
+
+Please refer to the [Backand iOS SDK documentation][ios SDK documentation] for further info.
+
+**Note:** You'll need to create an app in the Backand UI as well as define the databse tables as needed for your app. Inlike Parse, Backand doesn't support building the schema on the fly.
+
+###Other Installation Options
 
  - **Compiling for yourself**
 
@@ -59,22 +52,12 @@ And you're off! Take a look at the public [documentation][docs] and start buildi
 
     You can also include parse as a subproject inside of your application if you'd prefer, although we do not recommend this, as it will increase your indexing time significantly. To do so, just drag and drop the Parse.xcodeproj file into your workspace. Note that unit tests will be unavailable if you use Parse like this, as OCMock will be unable to be found.
 
-## How Do I Contribute?
-
-We want to make contributing to this project as easy and transparent as possible. Please refer to the [Contribution Guidelines][contributing].
-
 ## Dependencies
 
 We use the following libraries as dependencies inside of Parse:
 
  - [Bolts][bolts-framework], for task management.
  - [OCMock][ocmock-framework], for unit testing.
-
-## Other Parse Projects
-
- - [ParseUI for iOS][parseui-link]
- - [ParseFacebookUtils for iOS][parsefacebookutils-link]
- - [ParseTwitterUtils for iOS][parsetwitterutils-link]
 
 ## License
 
@@ -87,42 +70,17 @@ LICENSE file in the root directory of this source tree. An additional grant
 of patent rights can be found in the PATENTS file in the same directory.
 ```
 
- [parse.com]: https://www.parse.com/products/ios
- [docs]: https://www.parse.com/docs/ios/guide
- [blog]: https://blog.parse.com/
-
- [parseui-link]: https://github.com/ParsePlatform/ParseUI-iOS
- [parsefacebookutils-link]: https://github.com/ParsePlatform/ParseFacebookUtils-iOS
- [parsetwitterutils-link]: https://github.com/ParsePlatform/ParseTwitterUtils-iOS
-
- [releases]: https://github.com/ParsePlatform/Parse-SDK-iOS-OSX/releases
- [contributing]: https://github.com/ParsePlatform/Parse-SDK-iOS-OSX/blob/master/CONTRIBUTING.md
+ [Backand.com]: https://www.backand.com/
+ [migration]: https://www.backand.com/parse-alternative/
+ [docs]: http://docs.backand.com/en/latest/index.html
+ [comparison]: https://www.backand.com/iOS-sdk-parse-comparison
+ [ios SDK documentation]: http://docs.backand.com/en/latest/index.html
+ 
+ [releases]: https://github.com/backand/Backand-SDK-iOS-OSX/releases
 
  [bolts-framework]: https://github.com/BoltsFramework/Bolts-iOS
  [ocmock-framework]: http://ocmock.org
 
- [build-status-svg]: https://img.shields.io/travis/ParsePlatform/Parse-SDK-iOS-OSX/master.svg
- [build-status-link]: https://travis-ci.org/ParsePlatform/Parse-SDK-iOS-OSX/branches
-
- [coverage-status-svg]: https://img.shields.io/codecov/c/github/ParsePlatform/Parse-SDK-iOS-OSX/master.svg
- [coverage-status-link]: https://codecov.io/github/ParsePlatform/Parse-SDK-iOS-OSX?branch=master
-
  [license-svg]: https://img.shields.io/badge/license-BSD-lightgrey.svg
  [license-link]: https://github.com/ParsePlatform/Parse-SDK-iOS-OSX/blob/master/LICENSE
 
- [podspec-svg]: https://img.shields.io/cocoapods/v/Parse.svg
- [podspec-link]: https://cocoapods.org/pods/Parse
- 
- [carthage-svg]: https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat
- [carthage-link]: https://github.com/carthage/carthage
-
- [platforms-svg]: http://img.shields.io/cocoapods/p/Parse.svg?style=flat
-
- [dependencies-svg]: https://img.shields.io/badge/dependencies-2-yellowgreen.svg
- [dependencies-link]: https://github.com/ParsePlatform/Parse-SDK-iOS-OSX/blob/master/Vendor
-
- [references-svg]: https://www.versioneye.com/objective-c/parse/reference_badge.svg
- [references-link]: https://www.versioneye.com/objective-c/parse/references
-
- [gitter-svg]: https://img.shields.io/badge/gitter-join%20chat%20%E2%86%92-brightgreen.svg
- [gitter-link]: https://gitter.im/ParsePlatform/Chat
