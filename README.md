@@ -60,16 +60,6 @@ We use the following libraries as dependencies inside of Parse:
  - [Bolts][bolts-framework], for task management.
  - [OCMock][ocmock-framework], for unit testing.
 
-## License
-
-```
-Copyright (c) 2015-present, Parse, LLC.
-All rights reserved.
-
-This source code is licensed under the BSD-style license found in the
-LICENSE file in the root directory of this source tree. An additional grant
-of patent rights can be found in the PATENTS file in the same directory.
-```
 
  [Backand.com]: https://www.backand.com/
  [migration]: https://www.backand.com/parse-alternative/
