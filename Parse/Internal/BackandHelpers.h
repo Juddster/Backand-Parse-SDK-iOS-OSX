@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <Parse/PFConstants.h>
+#import <PFConstants.h>
 
 @interface BackandHelpers : NSObject
 
