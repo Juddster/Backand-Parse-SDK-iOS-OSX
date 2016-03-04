@@ -34,6 +34,15 @@ Please refer to the [Backand iOS SDK documentation][ios SDK documentation] for f
 
 ###Other Installation Options
 
+ - **[CocoaPods](https://cocoapods.org)**
+
+  Add the following line to your Podfile:
+  ```ruby
+  pod 'Backand'
+  ```
+  Run `pod install`, and you should now have the latest parse release.
+   
+
  - **Compiling for yourself**
 
     If you want to manually compile the SDK, clone it locally, and run the following commands in the root directory of the repository:
