@@ -1,12 +1,12 @@
 Pod::Spec.new do |s|
-  s.name             = 'Parse'
-  s.version          = '1.12.0'
+  s.name             = 'Backand'
+  s.version          = '0.1.0'
   s.license          =  { :type => 'BSD', :file => 'LICENSE' }
-  s.homepage         = 'https://www.parse.com/'
-  s.summary          = 'A library that gives you access to the powerful Parse cloud platform from your iOS/OS X/watchOS/tvOS app.'
-  s.authors          = 'Parse'
+  s.homepage         = 'https://www.backand.com/'
+  s.summary          = 'A Parse library that gives you access to the Backand cloud platform from your iOS/OS X/watchOS/tvOS app.'
+  s.authors          = 'Backand (standing on the sholders of Parse)'
 
-  s.source           = { :git => "https://github.com/ParsePlatform/Parse-SDK-iOS-OSX.git", :tag => s.version.to_s }
+  s.source           = { :git => "https://github.com/backand/Backand-SDK-iOS-OSX.git", :tag => s.version.to_s }
 
   s.platform = :ios, :osx, :tvos, :watchos
   s.ios.deployment_target = '7.0'
