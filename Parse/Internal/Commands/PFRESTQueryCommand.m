@@ -16,6 +16,7 @@
 #import "PFQueryState.h"
 #import "Parse.h"
 #import "BackandHelpers.h"
+#import "Parse_Private.h"
 
 @implementation PFRESTQueryCommand
 

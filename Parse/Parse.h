@@ -83,8 +83,6 @@ NS_ASSUME_NONNULL_BEGIN
  @param appName The AppName on Backand.com
  */
 + (void)setBackandAppName:(NSString *)appName andSignupToken:(NSString *)signupToken;
-+ (BOOL)usingBackand;
-+ (NSString *)getBackandSignupToken;
 
 #endif
 

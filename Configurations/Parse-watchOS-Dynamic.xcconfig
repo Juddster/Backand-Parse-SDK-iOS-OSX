@@ -10,7 +10,7 @@
 #include "Shared/Platform/watchOS.xcconfig"
 #include "Shared/Product/Framework.xcconfig"
 
-PRODUCT_NAME = Parse
+PRODUCT_NAME = Backand
 PRODUCT_BUNDLE_IDENTIFIER = com.backand.watchos
 
 MACH_O_TYPE = mh_dylib

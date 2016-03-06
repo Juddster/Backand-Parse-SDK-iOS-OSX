@@ -16,6 +16,7 @@
 #import "Parse.h"
 #import "BackandHelpers.h"
 #import "PFLogging.h"
+#import "Parse_Private.h"
 
 static NSString *const PFHTTPURLRequestContentTypeJSON = @"application/json; charset=utf-8";
 

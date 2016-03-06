@@ -7,7 +7,7 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-#import <Parse/Parse.h>
+#import <Backand/Backand.h>
 
 // If you want to use any of the UI components, uncomment this line
 // #import <ParseUI/ParseUI.h>
@@ -33,7 +33,6 @@
     // ****************************************************************************
     // Uncomment and fill in with your Parse credentials:
     // [Parse setApplicationId:@"your_application_id" clientKey:@"your_client_key"];
-    [Parse setApplicationId:@"9i7KXLsOxljC6I5HMceWL5zEh4FHKOAb7kAfJF2K" clientKey:@"mn88Spgsb2CRVhNRx6xN49k04dlH2SEatpqjIGQj"];
 
     // If you are using Facebook, uncomment and add your FacebookAppID to your bundle's plist as
     // described here: https://developers.facebook.com/docs/getting-started/facebook-sdk-for-ios/

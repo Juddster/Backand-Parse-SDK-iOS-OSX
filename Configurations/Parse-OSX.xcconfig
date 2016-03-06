@@ -10,7 +10,7 @@
 #include "Shared/Platform/OSX.xcconfig"
 #include "Shared/Product/Framework.xcconfig"
 
-PRODUCT_NAME = Parse
+PRODUCT_NAME = Backand
 PRODUCT_BUNDLE_IDENTIFIER = com.backand.osx
 
 MACH_O_TYPE = mh_dylib

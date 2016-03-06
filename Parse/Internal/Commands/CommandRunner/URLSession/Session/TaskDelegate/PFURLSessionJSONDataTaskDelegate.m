@@ -21,6 +21,7 @@
 #import "Parse.h"
 #import "BackandHelpers.h"
 #import "PFLogging.h"
+#import "Parse_Private.h"
 
 @interface PFURLSessionJSONDataTaskDelegate ()
 

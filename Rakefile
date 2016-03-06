@@ -71,7 +71,7 @@ namespace :build do
       t.directory = script_folder
       t.build_directory = build_folder
       t.framework_type = XCTask::FrameworkType::IOS
-      t.framework_name = 'Parse.framework'
+      t.framework_name = 'Backand.framework'
 
       t.workspace = 'Parse.xcworkspace'
       t.scheme = 'Parse-iOS'
@@ -90,7 +90,7 @@ namespace :build do
       t.directory = script_folder
       t.build_directory = build_folder
       t.framework_type = XCTask::FrameworkType::WATCHOS
-      t.framework_name = 'Parse.framework'
+      t.framework_name = 'Backand.framework'
 
       t.workspace = 'Parse.xcworkspace'
       t.scheme = 'Parse-watchOS'
@@ -109,7 +109,7 @@ namespace :build do
       t.directory = script_folder
       t.build_directory = build_folder
       t.framework_type = XCTask::FrameworkType::OSX
-      t.framework_name = 'Parse.framework'
+      t.framework_name = 'Backand.framework'
 
       t.workspace = 'Parse.xcworkspace'
       t.scheme = 'Parse-OSX'
@@ -128,7 +128,7 @@ namespace :build do
       t.directory = script_folder
       t.build_directory = build_folder
       t.framework_type = XCTask::FrameworkType::TVOS
-      t.framework_name = 'Parse.framework'
+      t.framework_name = 'Backand.framework'
 
       t.workspace = 'Parse.xcworkspace'
       t.scheme = 'Parse-tvOS'
@@ -143,10 +143,10 @@ namespace :build do
 end
 
 namespace :package do
-  package_ios_name = 'Parse-iOS.zip'
-  package_osx_name = 'Parse-OSX.zip'
-  package_tvos_name = 'Parse-tvOS.zip'
-  package_watchos_name = 'Parse-watchOS.zip'
+  package_ios_name = 'Backand-iOS.zip'
+  package_osx_name = 'Backand-OSX.zip'
+  package_tvos_name = 'Backand-tvOS.zip'
+  package_watchos_name = 'Backand-watchOS.zip'
   package_starter_ios_name = 'ParseStarterProject-iOS.zip'
   package_starter_osx_name = 'ParseStarterProject-OSX.zip'
   package_starter_tvos_name = 'ParseStarterProject-tvOS.zip'
@@ -166,7 +166,7 @@ namespace :package do
     ## Build iOS Framework
     Rake::Task['build:ios'].invoke
     bolts_path = File.join(bolts_build_folder, 'ios', 'Bolts.framework')
-    ios_framework_path = File.join(build_folder, 'Parse.framework')
+    ios_framework_path = File.join(build_folder, 'Backand.framework')
     make_package(release_folder,
                  [ios_framework_path, bolts_path],
                  package_ios_name)
@@ -174,7 +174,7 @@ namespace :package do
     ## Build OS X Framework
     Rake::Task['build:osx'].invoke
     bolts_path = File.join(bolts_build_folder, 'osx', 'Bolts.framework')
-    osx_framework_path = File.join(build_folder, 'Parse.framework')
+    osx_framework_path = File.join(build_folder, 'Backand.framework')
     make_package(release_folder,
                  [osx_framework_path, bolts_path],
                  package_osx_name)
@@ -182,7 +182,7 @@ namespace :package do
    ## Build tvOS Framework
    Rake::Task['build:tvos'].invoke
    bolts_path = File.join(bolts_build_folder, 'tvOS', 'Bolts.framework')
-   tvos_framework_path = File.join(build_folder, 'Parse.framework')
+   tvos_framework_path = File.join(build_folder, 'Backand.framework')
    make_package(release_folder,
                 [tvos_framework_path, bolts_path],
                 package_tvos_name)
@@ -190,7 +190,7 @@ namespace :package do
     ## Build watchOS Framework
     Rake::Task['build:watchos'].invoke
     bolts_path = File.join(bolts_build_folder, 'watchOS', 'Bolts.framework')
-    watchos_framework_path = File.join(build_folder, 'Parse.framework')
+    watchos_framework_path = File.join(build_folder, 'Backand.framework')
     make_package(release_folder,
                  [watchos_framework_path, bolts_path],
                  package_watchos_name)

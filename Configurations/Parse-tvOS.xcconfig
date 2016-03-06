@@ -10,7 +10,7 @@
 #include "Shared/Platform/tvOS.xcconfig"
 #include "Shared/Product/Framework.xcconfig"
 
-PRODUCT_NAME = Parse
+PRODUCT_NAME = Backand
 PRODUCT_BUNDLE_IDENTIFIER = com.backand.tvos
 
 MACH_O_TYPE = staticlib

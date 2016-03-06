@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
    LastUpgradeVersion = "0730"
-   version = "1.3">
+   version = "1.8">
    <BuildAction
       parallelizeBuildables = "NO"
       buildImplicitDependencies = "NO">
@@ -16,7 +16,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "81C3821B19CCA89E0066284A"
-               BuildableName = "Parse.framework"
+               BuildableName = "Backand.framework"
                BlueprintName = "Parse-iOS"
                ReferencedContainer = "container:../../../Parse.xcodeproj">
             </BuildableReference>

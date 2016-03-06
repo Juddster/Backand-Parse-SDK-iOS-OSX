@@ -13,6 +13,7 @@
 #import "PFHTTPRequest.h"
 #import "PFObjectState.h"
 #import "Parse.h"
+#import "Parse_Private.h"
 
 @implementation PFRESTObjectCommand
 

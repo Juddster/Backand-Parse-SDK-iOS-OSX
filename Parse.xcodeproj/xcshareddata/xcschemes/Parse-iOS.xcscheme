@@ -16,7 +16,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "81C3821B19CCA89E0066284A"
-               BuildableName = "Parse.framework"
+               BuildableName = "Backand.framework"
                BlueprintName = "Parse-iOS"
                ReferencedContainer = "container:Parse.xcodeproj">
             </BuildableReference>
@@ -61,7 +61,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "81C3821B19CCA89E0066284A"
-            BuildableName = "Parse.framework"
+            BuildableName = "Backand.framework"
             BlueprintName = "Parse-iOS"
             ReferencedContainer = "container:Parse.xcodeproj">
          </BuildableReference>
@@ -83,7 +83,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "81C3821B19CCA89E0066284A"
-            BuildableName = "Parse.framework"
+            BuildableName = "Backand.framework"
             BlueprintName = "Parse-iOS"
             ReferencedContainer = "container:Parse.xcodeproj">
          </BuildableReference>
@@ -101,7 +101,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "81C3821B19CCA89E0066284A"
-            BuildableName = "Parse.framework"
+            BuildableName = "Backand.framework"
             BlueprintName = "Parse-iOS"
             ReferencedContainer = "container:Parse.xcodeproj">
          </BuildableReference>
