@@ -13,7 +13,7 @@
 #pragma mark - SDK Version
 ///--------------------------------------
 
-#define PARSE_VERSION @"0.1.0"
+#define PARSE_VERSION @"0.1.1"
 
 ///--------------------------------------
 #pragma mark - Platform
