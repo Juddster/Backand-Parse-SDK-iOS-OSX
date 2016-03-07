@@ -143,13 +143,13 @@ static NSString *const ParseRestKey_Object = @"Object";
 + (id) patchIncomingResponseDataFromBackand:(id)data
 {
     PFLogBackandDebug(PFLoggingTagCommon, @"patchIncomingResponseDataFromBackand:\n%@", data);
-    id retData = [self patchIncomingResponseDataFromBackand:data fieldInfo:nil];
+    id retData = [self patchIncomingResponseDataFromBackand:data fieldInfo:nil relatedObjects:nil];
     PFLogBackandDebug(PFLoggingTagCommon, @"patched:\n%@", retData);
 
     return retData;
 }
 
-+ (id) patchIncomingResponseDataFromBackand:(id)data fieldInfo:(NSDictionary *)fieldInfo
++ (id) patchIncomingResponseDataFromBackand:(id)data fieldInfo:(NSDictionary *)fieldInfo relatedObjects:(NSDictionary *)relatedObjects
 {
     if (fieldInfo)
     {
@@ -170,10 +170,16 @@ static NSString *const ParseRestKey_Object = @"Object";
         NSString *className = fieldInfo[BackandRestKey_object];
         if (className)
         {
+            if ([data isKindOfClass:[NSNull class]] ||
+                ([data isKindOfClass:[NSString class]] && ((NSString *)data).length == 0))
+            {
+                return [NSNull null];
+            }
+
             if ([data isKindOfClass:[NSDictionary class]])
             {
                 // must be the actual object...
-                NSDictionary *patchedObj = [self patchIncomingResponseDataFromBackand:data fieldInfo:nil];
+                NSDictionary *patchedObj = [self patchIncomingResponseDataFromBackand:data fieldInfo:nil relatedObjects:relatedObjects];
 
                 NSMutableDictionary *newDict = [patchedObj mutableCopy];
 
@@ -183,8 +189,29 @@ static NSString *const ParseRestKey_Object = @"Object";
                 return [newDict copy];
             }
 
-            // it's just the object id...
-            return @{ParseRestKey_type:@"Pointer",ParseRestKey_className:className,ParseRestKey_objectId:data};
+            if ([data isKindOfClass:[NSString class]] || [data isKindOfClass:[NSNumber class]])
+            {
+                // it's just the object id...
+                NSString *objectId = [data description]; // if it came in as an NSNumber, description will give us a string
+
+                NSDictionary *relatedObject = relatedObjects[className][objectId];
+
+                if (relatedObject)
+                {
+                    NSDictionary *patchedObj = [self patchIncomingResponseDataFromBackand:relatedObject fieldInfo:nil relatedObjects:relatedObjects];
+
+                    NSMutableDictionary *newDict = [patchedObj mutableCopy];
+
+                    newDict[ParseRestKey_type] = ParseRestKey_Object;
+                    newDict[ParseRestKey_className] = className;
+
+                    return [newDict copy];
+                }
+
+                return @{ParseRestKey_type:@"Pointer",ParseRestKey_className:className,ParseRestKey_objectId:data};
+            }
+
+            PFConsistencyAssert(NO, @"Unknown object representation: %@", data);
         }
 
         className = fieldInfo[BackandRestKey_collection];
@@ -201,13 +228,13 @@ static NSString *const ParseRestKey_Object = @"Object";
             if (objects)
             {
                 return [BackandHelpers mapArray:objects usingBlock:^id(id obj) {
-                    
+
                     NSDictionary *fieldInfo = @{BackandRestKey_object:className};
-                    
-                    return [self patchIncomingResponseDataFromBackand:obj fieldInfo:fieldInfo];
+
+                    return [self patchIncomingResponseDataFromBackand:obj fieldInfo:fieldInfo relatedObjects:relatedObjects];
                 }];
             }
-            
+
         }
 
         // other field types don't need patching so data will be returned as is...
@@ -234,7 +261,7 @@ static NSString *const ParseRestKey_Object = @"Object";
                     else
                     {
                         NSDictionary *fieldInfo = fieldsDict[key];
-                        patchedDict[key] = [self patchIncomingResponseDataFromBackand:obj fieldInfo:fieldInfo];
+                        patchedDict[key] = [self patchIncomingResponseDataFromBackand:obj fieldInfo:fieldInfo relatedObjects:relatedObjects];
                     }
                 }
             }];
@@ -251,12 +278,15 @@ static NSString *const ParseRestKey_Object = @"Object";
             id resultsArray = dataDict[@"data"];
             PFConsistencyAssert([resultsArray isKindOfClass:[NSArray class]], @"hmmm. expected an array of objects here...");
 
-            return @{@"results":[self patchIncomingResponseDataFromBackand:resultsArray fieldInfo:nil]};
+            relatedObjects = dataDict[@"relatedObjects"];
+            PFConsistencyAssert(!relatedObjects || [relatedObjects isKindOfClass:[NSDictionary class]], @"hmmm. expected relatedObjects to be a dictionary...");
+
+            return @{@"results":[self patchIncomingResponseDataFromBackand:resultsArray fieldInfo:nil relatedObjects:relatedObjects]};
         }
         else
         {
             // this is a response to something like login or signup...
-            
+
             NSMutableDictionary *patchedDict = [dataDict mutableCopy];
 
             NSString *accessToken = patchedDict[@"access_token"];
@@ -289,7 +319,7 @@ static NSString *const ParseRestKey_Object = @"Object";
     {
         NSArray *arrayIn = data;
         return [BackandHelpers mapArray:arrayIn usingBlock:^id(id obj) {
-            return [self patchIncomingResponseDataFromBackand:obj fieldInfo:nil];
+            return [self patchIncomingResponseDataFromBackand:obj fieldInfo:nil relatedObjects:relatedObjects];
         }];
     }
 
@@ -349,18 +379,18 @@ static NSString *const ParseRestKey_Object = @"Object";
 + (NSArray *) mapArray:(NSArray *)arrayIn usingBlock:(AnArrayMappingBlock)mappingBlock
 {
     NSArray *retArray = arrayIn;
-
+    
     if (mappingBlock)
     {
         NSMutableArray *newArray = [[NSMutableArray alloc] initWithCapacity:arrayIn.count];
-
+        
         for (id obj in arrayIn)
         {
             id mappedObj = mappingBlock(obj);
-
+            
             [newArray addObject:mappedObj];
         }
-
+        
         retArray = newArray;
     }
     

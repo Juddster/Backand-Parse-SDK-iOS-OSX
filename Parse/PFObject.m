@@ -1301,6 +1301,14 @@ static void PFObjectAssertValueIsKindOfValidClass(id object) {
                     // depending on whether they were wrapped inside JSONObject with __type: Date or not.
                     if ([obj isKindOfClass:[NSDate class]]) {
                         state.createdAt = obj;
+                    } else if ([obj isKindOfClass:[NSDictionary class]]) {
+                        id dateString = ((NSDictionary *)obj)[@"iso"];
+
+                        if ([dateString isKindOfClass:[NSNull class]]) {
+                            state.createdAt = obj;
+                        } else {
+                            [state setCreatedAtFromString:dateString];
+                        }
                     } else {
                         [state setCreatedAtFromString:obj];
                     }
@@ -1309,6 +1317,14 @@ static void PFObjectAssertValueIsKindOfValidClass(id object) {
                     // depending on whether they were wrapped inside JSONObject with __type: Date or not.
                     if ([obj isKindOfClass:[NSDate class]]) {
                         state.updatedAt = obj;
+                    } else if ([obj isKindOfClass:[NSDictionary class]]) {
+                        id dateString = ((NSDictionary *)obj)[@"iso"];
+
+                        if ([dateString isKindOfClass:[NSNull class]]) {
+                            state.updatedAt = obj;
+                        } else {
+                            [state setUpdatedAtFromString:dateString];
+                        }
                     } else {
                         [state setUpdatedAtFromString:obj];
                     }

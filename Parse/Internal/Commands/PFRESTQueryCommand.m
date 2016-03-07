@@ -64,7 +64,7 @@
                                   parameters:(NSDictionary *)parameters
                                 sessionToken:(NSString *)sessionToken
 {
-    NSString *httpPath = [NSString stringWithFormat:@"%@/%@", [self apiPath], className];
+    NSString *httpPath = [NSString stringWithFormat:@"%@/%@?relatedObjects=true", [self apiPath], className];
 
     NSString *query = nil;
 
@@ -76,7 +76,7 @@
         }
         parameters = nil; // A non nil parameters (even if empty) truns the GET into a POST. Backand only responds to a GET in this case.
     }
-    
+
     PFRESTQueryCommand *command = [self ba_commandWithHTTPPath:httpPath
                                                      httpQuery:query
                                                     httpMethod:PFHTTPRequestMethodGET
@@ -181,10 +181,11 @@
     }
     if (includedKeys.count > 0)
     {
-        BACKAND_QUERY_UNSUPPORTED;
-        NSArray *sortDescriptors = @[ [NSSortDescriptor sortDescriptorWithKey:@"self" ascending:YES selector:@selector(compare:)] ];
-        NSArray *keysArray = [includedKeys sortedArrayUsingDescriptors:sortDescriptors];
-        parameters[@"include"] = [keysArray componentsJoinedByString:@","];
+        // ignore this. For now we unconditionally call the REST API with &relatedObjects=true
+
+        //        NSArray *sortDescriptors = @[ [NSSortDescriptor sortDescriptorWithKey:@"self" ascending:YES selector:@selector(compare:)] ];
+        //        NSArray *keysArray = [includedKeys sortedArrayUsingDescriptors:sortDescriptors];
+        //        parameters[@"include"] = [keysArray componentsJoinedByString:@","];
     }
     if (limit >= 0)
     {
@@ -214,7 +215,7 @@
     if (conditions.count > 0)
     {
         NSMutableDictionary *whereData = [[NSMutableDictionary alloc] init];
-        
+
         [conditions enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
             if ([key isEqualToString:@"$or"])
             {
@@ -258,7 +259,8 @@
 
         if (usingBackand && !nestedQuery)
         {
-            parameters[@"filter"] = [BackandHelpers jsonStringFromParams:@{@"q":whereData}];
+            id patchedWhereData = [BackandHelpers patchOutGoingParamsForBackand:whereData];
+            parameters[@"filter"] = [BackandHelpers jsonStringFromParams:@{@"q":patchedWhereData}];
         }
         else
         {
@@ -284,7 +286,7 @@
         {
 
             BACKAND_QUERY_UNSUPPORTED;
-            
+
             PFQuery *subquery = (PFQuery *)obj;
             NSMutableDictionary *subqueryParameters = [[self findCommandParametersWithOrder:subquery.state.sortOrderString
                                                                                  conditions:subquery.state.conditions
@@ -302,10 +304,10 @@
         {
             obj = [self _encodeSubqueryIfNeeded:obj];
         }
-
+        
         parameters[key] = obj;
     }];
-
+    
     return parameters;
 }
 
