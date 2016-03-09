@@ -13,16 +13,16 @@ For more information on Backand and its features, see [the website][Backand.com]
 To use this SDK, head on over to the [releases][releases] page, and download the latest build.
 
 ###Migrating an existing project from Parse to Backand
-1. Replace the existing `Backand.framework` in your project with the one you downloaded above.
-2. Throughout the project, replace `#import <Parse/*.h>` with `#import<Backand.*.h>`
+1. Replace `Parse.framework` in your project with `Backand.framework` you downloaded above.
+2. Throughout the project, replace `#import <Parse/*.h>` with `#import <Backand/*.h>`
 3. **In swift projects**, In the bridging_header.h, `#import <Backand/Backand.h>` instead of `#import <Parse/Parse.h>`. and in the rest of the project replace `import Parse` with `import Backand`
-At this point, if you build and run your app, everything should be the same as with the original Parse.framework. It is still running against Parse.com's backend. The only difference you should see is a message in the debug console confirming that you are now using the Parse SDK for Backand.
+At this point, if you build and run your app, everything should be the same as with the original Parse.framework. It is still running against Parse.com's backend and **everything should be fully functional**. The only difference you should see is a message in the debug console confirming that you are now using the Parse SDK for Backand.
 4. In your app delegate, replace the call to `[Parse setApplicationId:clientKey:]` with a call to `[Parse setBackandAppName:andSignupToken:]`  (you can obtain these from your Backand app). (*in swift* call `Parse.setBackandAppName(“BACKAND-APP-NAME”, andSignupToken: "BACKAND-APP-SIGNUP-TOKEN”)` instead of `Parse.setApplicationId(PARSE_APP_ID, clientKey: PARSE_CLIENT_KEY)`)
-
+Now your app is running against Backand.com's backend and you should expect some of the API calls to raise exceptions (e.g. Not Yet Implemented).
 
 **Note:** You'll want to migrate your app/database from Parse.com to Backand.com. See [migration instructions][migration]
 
-**Note:** Although a significant subset of the SDK is ready, certainly there are areas that are not yet working. For most of the scenarios that are not supported yet, an exception is raised so you can't miss it. I'll write another doc with details about which parts of the SDK are ready and add a link here when I have it.
+**Note:** Although a significant subset of the SDK is ready, certainly there are areas that are not yet working. For most of the scenarios that are not supported yet, an exception is raised so you can't miss it. I'll write another doc with details about which parts of the SDK are ready and add a link here when I have it. If you need portions of the SDK that are still not ready, please let me know as that will factor in on my prioritiesation.
 
 ###New projects
 1. Add the frameworks `Backand` and `Bolts` that you downloaded above to your project.
