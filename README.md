@@ -1,34 +1,37 @@
-# Parse SDK for iOS/OS X/watchOS/tvOS
+# Backand SDK for iOS/OS X/watchOS/tvOS
 
 [![License][license-svg]][license-link]
 
-This SDK has been forked from the Parse SDK. It has been modified to access Backand's backend service instead of the Parse backend. Our intention is to maintain source level compatibility with the original Parse SDK and preserve as much functionality as possible. Our goal is to minimize code changes for projects that are migrating from Parse to Backand.
+This SDK has been forked from the Parse SDK. It has been modified to access Backand's backend service instead of the Parse backend. My intention is to maintain source level compatibility with the original Parse SDK and preserve as much functionality as possible. My goal is to minimize code changes for projects that are migrating from Parse to Backand.
 
 This is a library that gives you access to the Backand cloud platform from your iOS or OS X app.
+For the SDK documentation, for now, please refer to the original [Parse docs][Parse Docs].
 For more information on Backand and its features, see [the website][Backand.com] and [getting started][docs].
 
 ## Getting Started
 
-To use parse, head on over to the [releases][releases] page, and download the latest build.
+To use this SDK, head on over to the [releases][releases] page, and download the latest build.
 
 ###Migrating an existing project from Parse to Backand
-1. Replace the existing `Parse.framework` in your project with the one you downloaded above.
+1. Replace the existing `Backand.framework` in your project with the one you downloaded above.
+2. Throughout the project, replace `#import <Parse/*.h>` with `#import<Backand.*.h>`
+3. **In swift projects**, In the bridging_header.h, `#import <Backand/Backand.h>` instead of `#import <Parse/Parse.h>`. and in the rest of the project replace `import Parse` with `import Backand`
 At this point, if you build and run your app, everything should be the same as with the original Parse.framework. It is still running against Parse.com's backend. The only difference you should see is a message in the debug console confirming that you are now using the Parse SDK for Backand.
-2. In your app delegate, replace the call to `[Parse setApplicationId:clientKey:]` with a call to `[Parse setBackandAppName:andSignupToken:]`  (you can obtain these from your Backand app).
-3. There is no step 3! You are all set.
+4. In your app delegate, replace the call to `[Parse setApplicationId:clientKey:]` with a call to `[Parse setBackandAppName:andSignupToken:]`  (you can obtain these from your Backand app). (*in swift* call `Parse.setBackandAppName(“BACKAND-APP-NAME”, andSignupToken: "BACKAND-APP-SIGNUP-TOKEN”)` instead of `Parse.setApplicationId(PARSE_APP_ID, clientKey: PARSE_CLIENT_KEY)`)
+
 
 **Note:** You'll want to migrate your app/database from Parse.com to Backand.com. See [migration instructions][migration]
 
-**Note:** Although we completed a significant subset of the SDK, certainly there are areas that are not yet working. For most of the scenarios that are not supported yet, an exception is raised so you can't miss it. Please refer to the [comparison doc][comparison] for up to date info on our progress
+**Note:** Although a significant subset of the SDK is ready, certainly there are areas that are not yet working. For most of the scenarios that are not supported yet, an exception is raised so you can't miss it. I'll write another doc with details about which parts of the SDK are ready and add a link here when I have it.
 
 ###New projects
-1. Add the frameworks `Parse` and `Bolts` that you downloaded above to your project.
+1. Add the frameworks `Backand` and `Bolts` that you downloaded above to your project.
 2. Additionally, add the frameworks: `SystemConfiguration`, `AudioToolbox` & `libsqlite3`
-3. In your AppDelegate `#import <Parse/Parse.h>` 
+3. In your AppDelegate `#import <Backand/Backand.h>` 
 4. In your `application:didFinishLaunchingWithOptions:` add a call to `[Parse setBackandAppName:andSignupToken:]`  (you can obtain these from your Backand app).
 5. You're all set. Run your app and you'll see in the debug console a message confirming that you are now using the Parse SDK for Backand.
 
-Please refer to the [Backand iOS SDK documentation][ios SDK documentation] for further info.
+Please refer to the original [Parse docs][Parse Docs] for further info.
 
 **Note:** You'll need to create an app in the Backand UI as well as define the databse tables as needed for your app. Unlike Parse, Backand doesn't support building the schema on the fly.
 
@@ -43,6 +46,9 @@ Please refer to the [Backand iOS SDK documentation][ios SDK documentation] for f
   Run `pod install`, and you should now have the latest parse release.
    
 
+**Note:** If you are also using **ParseFacebookUtilsV4**, You'll need to replace that pod with the **BackandParseFacebookUtilsV4** pod. It is the exact same code. The only change is to make it depend on the Backand pod/framework. It is there only to get a project to build. But I don't expect it to work yet as I didn't touch the necessary APIs in the Backand pod.
+
+
  - **Compiling for yourself**
 
     If you want to manually compile the SDK, clone it locally, and run the following commands in the root directory of the repository:
@@ -56,7 +62,7 @@ Please refer to the [Backand iOS SDK documentation][ios SDK documentation] for f
         # Build & Package the Frameworks
         rake package:frameworks
 
-    Compiled frameworks will be in 2 archives: `Parse-iOS.zip` and `Parse-OSX.zip` inside the `build/release` folder, and you can link them as you'd please.
+    Compiled frameworks will be in 2 archives: `Backand-iOS.zip` and `Backand-OSX.zip` inside the `build/release` folder, and you can link them as you'd please.
 
  - **Using Parse as a sub-project**
 
@@ -64,12 +70,12 @@ Please refer to the [Backand iOS SDK documentation][ios SDK documentation] for f
 
 ## Dependencies
 
-We use the following libraries as dependencies inside of Parse:
+This SDK uses the following libraries as dependencies inside of Backand:
 
  - [Bolts][bolts-framework], for task management.
  - [OCMock][ocmock-framework], for unit testing.
 
-
+ [Parse Docs]: https://parse.com/docs/ios/guide
  [Backand.com]: https://www.backand.com/
  [migration]: https://www.backand.com/parse-alternative/
  [docs]: http://docs.backand.com/en/latest/index.html
