@@ -22,7 +22,7 @@ Now your app is running against Backand.com's backend and you should expect some
 
 **Note:** You'll want to migrate your app/database from Parse.com to Backand.com. See [migration instructions][migration]
 
-**Note:** Although a significant subset of the SDK is ready, certainly there are areas that are not yet working. For most of the scenarios that are not supported yet, an exception is raised so you can't miss it. I'll write another doc with details about which parts of the SDK are ready and add a link here when I have it. If you need portions of the SDK that are still not ready, please let me know as that will factor in on my prioritiesation.
+**Note:** Although a significant subset of the SDK is ready, certainly there are areas that are not yet working. For most of the scenarios that are not supported yet, an exception is raised so you can't miss it. please reffer to the [project status page][status page] for updated lists of what's ready and what's not. If you need portions of the SDK that are still not ready, please let me know as that will factor in on my prioritiesation.
 
 ###New projects
 1. Add the frameworks `Backand` and `Bolts` that you downloaded above to your project.
@@ -81,6 +81,7 @@ This SDK uses the following libraries as dependencies inside of Backand:
  [docs]: http://docs.backand.com/en/latest/index.html
  [comparison]: https://www.backand.com/iOS-sdk-parse-comparison
  [ios SDK documentation]: http://docs.backand.com/en/latest/index.html
+ [status page]: https://github.com/Juddster/Backand-Parse-SDK-iOS-OSX/wiki/Status
  
  [releases]: https://github.com/backand/Backand-SDK-iOS-OSX/releases
 
