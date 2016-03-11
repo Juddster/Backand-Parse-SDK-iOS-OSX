@@ -82,8 +82,7 @@ This SDK uses the following libraries as dependencies inside of Backand:
  [comparison]: https://www.backand.com/iOS-sdk-parse-comparison
  [ios SDK documentation]: http://docs.backand.com/en/latest/index.html
  [status page]: https://github.com/Juddster/Backand-Parse-SDK-iOS-OSX/wiki/Status
- 
- [releases]: https://github.com/backand/Backand-SDK-iOS-OSX/releases
+ [releases]: https://github.com/Juddster/Backand-Parse-SDK-iOS-OSX/releases
 
  [bolts-framework]: https://github.com/BoltsFramework/Bolts-iOS
  [ocmock-framework]: http://ocmock.org
