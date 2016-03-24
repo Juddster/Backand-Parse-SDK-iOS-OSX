@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'Backand'
-  s.version          = '0.1.2'
+  s.version          = '0.1.3'
   s.license          =  { :type => 'BSD', :file => 'LICENSE' }
   s.homepage         = 'https://www.backand.com/'
   s.summary          = 'A Parse library that gives you access to the Backand cloud platform from your iOS/OS X/watchOS/tvOS app.'
