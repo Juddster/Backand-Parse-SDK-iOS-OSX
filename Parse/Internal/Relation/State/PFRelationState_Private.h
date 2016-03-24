@@ -24,5 +24,6 @@
 @property (nonatomic, copy, readwrite) NSString *targetClass;
 @property (nonatomic, copy, readwrite) NSSet *knownObjects;
 @property (nonatomic, copy, readwrite) NSString *key;
+@property (nonatomic, copy, readwrite) NSString *viaField; //for use by Backand
 
 @end

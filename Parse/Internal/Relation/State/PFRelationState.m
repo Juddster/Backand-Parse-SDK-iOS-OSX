@@ -26,6 +26,7 @@
         @"targetClass": [PFPropertyAttributes attributesWithAssociationType:PFPropertyInfoAssociationTypeCopy],
         @"knownObjects": [PFPropertyAttributes attributesWithAssociationType:PFPropertyInfoAssociationTypeCopy],
         @"key": [PFPropertyAttributes attributesWithAssociationType:PFPropertyInfoAssociationTypeCopy],
+        @"viaField": [PFPropertyAttributes attributesWithAssociationType:PFPropertyInfoAssociationTypeCopy],
     };
 }
 

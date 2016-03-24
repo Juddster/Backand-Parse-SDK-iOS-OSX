@@ -17,12 +17,14 @@
 #import "PFInternalUtils.h"
 #import "PFMacros.h"
 #import "PFMutableRelationState.h"
+#import "PFRelationState_private.h"
 #import "PFObjectPrivate.h"
 #import "PFQueryPrivate.h"
 
 static NSString *const PFRelationKeyClassName = @"className";
 static NSString *const PFRelationKeyType = @"__type";
 static NSString *const PFRelationKeyObjects = @"objects";
+static NSString *const PFRelationKeyViaField = @"viaField";
 
 @interface PFRelation () {
     //
@@ -88,6 +90,7 @@ static NSString *const PFRelationKeyObjects = @"objects";
     }
 
     _state.targetClass = dictionary[PFRelationKeyClassName];
+    _state.viaField = dictionary[PFRelationKeyViaField];
     [_state.knownObjects setSet:known];
 
     return self;
@@ -128,12 +131,13 @@ static NSString *const PFRelationKeyObjects = @"objects";
 - (NSString *)description {
     PFRelationState *state = [self.state copy];
 
-    return [NSString stringWithFormat:@"<%@: %p, %p.%@ -> %@>",
+    return [NSString stringWithFormat:@"<%@: %p, %p.%@ -> %@(via %@)>",
             [self class],
             self,
             state.parent,
             state.key,
-            state.targetClass];
+            state.targetClass,
+            state.viaField];
 }
 
 - (PFQuery *)query {
@@ -168,11 +172,23 @@ static NSString *const PFRelationKeyObjects = @"objects";
     });
 }
 
+- (NSString *)viaField {
+    return self.state.viaField;
+}
+
+- (void)setViaField:(NSString *)viaField
+{
+    dispatch_sync(_stateAccessQueue, ^{
+        self.state.viaField = viaField;
+    });
+}
+
 - (void)addObject:(PFObject *)object {
     pf_sync_with_throw(_stateAccessQueue, ^{
         PFRelationState *state = self.state;
 
         PFRelationOperation *op = [PFRelationOperation addRelationToObjects:@[ object ]];
+        op.viaField = self.viaField;
         [state.parent performOperation:op forKey:state.key];
 
         self.state.targetClass = op.targetClass;
@@ -185,6 +201,7 @@ static NSString *const PFRelationKeyObjects = @"objects";
         PFRelationState *state = self.state;
 
         PFRelationOperation *op = [PFRelationOperation removeRelationToObjects:@[ object ]];
+        op.viaField = self.viaField;
         [state.parent performOperation:op forKey:state.key];
 
         self.state.targetClass = op.targetClass;

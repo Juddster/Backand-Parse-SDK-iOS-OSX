@@ -40,7 +40,7 @@
 
                 if (query)
                 {
-                    query = [query stringByAppendingFormat:@"&%@", pathComps[1]];
+                    query = [pathComps[1] stringByAppendingFormat:@"&%@", query];
                 }
                 else
                 {

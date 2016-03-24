@@ -17,6 +17,7 @@
 #import "Parse.h"
 #import "BackandHelpers.h"
 #import "Parse_Private.h"
+#import "PFRelation.h"
 
 @implementation PFRESTQueryCommand
 
@@ -249,6 +250,17 @@
                     }
                 }
                 whereData[key] = newArray;
+            }
+            if (usingBackand && [key isEqualToString:@"$relatedTo"])
+            {
+                PFObject *pfObject = obj[@"object"];
+                NSString *relationField = obj[@"key"];
+                PFRelation *pfRelation = pfObject[relationField];
+                NSString *viaField = pfRelation.viaField;
+
+                PFParameterAssert(viaField, @"Missing viaField on the PFRelation object");
+
+                whereData[viaField] = pfObject.objectId;
             }
             else
             {

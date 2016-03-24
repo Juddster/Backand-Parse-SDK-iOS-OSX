@@ -776,7 +776,14 @@ static BOOL revocableSessionEnabled_;
 @synthesize _lazy = _lazy;
 
 + (NSString *)parseClassName {
-    return @"_User";
+    if ([Parse usingBackand])
+    {
+        return @"users";
+    }
+    else
+    {
+        return @"_User";
+    }
 }
 
 + (instancetype)currentUser {

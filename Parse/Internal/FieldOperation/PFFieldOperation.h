@@ -159,6 +159,7 @@
 @interface PFRelationOperation : PFFieldOperation
 
 @property (nonatomic, copy) NSString *targetClass;
+@property (nonatomic, copy) NSString *viaField;
 @property (nonatomic, strong) NSMutableSet *relationsToAdd;
 @property (nonatomic, strong) NSMutableSet *relationsToRemove;
 

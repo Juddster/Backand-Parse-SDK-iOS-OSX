@@ -25,6 +25,18 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nullable, nonatomic, copy) NSString *targetClass;
 
+
+/**
+ With Backand, Relations are actually Join Tables.
+ The viaField contains the name of the field that hold the object id of
+ the other side of the relation. When the Relation object comes from an
+ object that was retrived from the server, the viaField is already set.
+ If the PFRelation object is created locally, you need to set the viaField for
+ PFRelation queries to work.
+ */
+@property (nonatomic, strong) NSString *viaField;
+
+
 ///--------------------------------------
 #pragma mark - Accessing Objects
 ///--------------------------------------

@@ -16,6 +16,7 @@
 #import "PFOfflineStore.h"
 #import "PFRelation.h"
 #import "PFRelationPrivate.h"
+#import "Parse.h"
 
 ///--------------------------------------
 #pragma mark - PFFieldOperation
@@ -453,13 +454,33 @@
     NSDictionary *removeDict = nil;
     if (self.relationsToAdd.count > 0) {
         NSArray *array = [self _convertToArrayInSet:self.relationsToAdd withObjectEncoder:objectEncoder];
-        addDict = @{ @"__op" : @"AddRelation",
-                     @"objects" : array };
+
+        if ([Parse usingBackand])
+        {
+            addDict = @{ @"__op" : @"AddRelation",
+                         @"__viaField": self.viaField,
+                         @"objects" : array };
+        }
+        else
+        {
+            addDict = @{ @"__op" : @"AddRelation",
+                         @"objects" : array };
+        }
     }
     if (self.relationsToRemove.count > 0) {
         NSArray *array = [self _convertToArrayInSet:self.relationsToRemove withObjectEncoder:objectEncoder];
-        removeDict = @{ @"__op" : @"RemoveRelation",
-                        @"objects" : array };
+
+        if ([Parse usingBackand])
+        {
+            removeDict = @{ @"__op" : @"RemoveRelation",
+                            @"__viaField": self.viaField,
+                            @"objects" : array };
+        }
+        else
+        {
+            removeDict = @{ @"__op" : @"RemoveRelation",
+                            @"objects" : array };
+        }
     }
 
     if (addDict && removeDict) {

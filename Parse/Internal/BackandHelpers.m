@@ -21,6 +21,7 @@ static NSString *const ParseRestKey_objectId = @"objectId";
 static NSString *const ParseRestKey_type = @"__type";
 static NSString *const ParseRestKey_op = @"__op";
 static NSString *const ParseRestKey_className = @"className";
+static NSString *const ParseRestKey_viaField = @"viaField";
 static NSString *const ParseRestKey_Object = @"Object";
 
 @implementation BackandHelpers
@@ -77,6 +78,8 @@ static NSString *const ParseRestKey_Object = @"Object";
             if ([opType isEqualToString:@"AddRelation"])
             {
                 NSArray *objects = [paramsIn objectForKey:@"objects"];
+                NSString *viaField = [paramsIn objectForKey:@"__viaField"];
+                PFConsistencyAssert(viaField, @"missing __viaField in %@", opType);
 
                 return [BackandHelpers mapArray:objects usingBlock:^id(id obj) {
 
@@ -84,7 +87,8 @@ static NSString *const ParseRestKey_Object = @"Object";
 
                     if ([objType isEqualToString:@"Pointer"])
                     {
-                        return @{BackandRestKey_metadata: @{BackandRestKey_Id: [obj objectForKey:ParseRestKey_objectId]}};
+//                        return @{BackandRestKey_metadata: @{BackandRestKey_Id: [obj objectForKey:ParseRestKey_objectId]}};
+                        return @{viaField : [obj objectForKey:ParseRestKey_objectId]};
                     }
                     else if ([objType isEqualToString:ParseRestKey_Object])
                     {
@@ -163,8 +167,34 @@ static NSString *const ParseRestKey_Object = @"Object";
 
         if ([fieldType isEqualToString:@"point"])
         {
-            NSArray *latLon = data;
-            return @{ParseRestKey_type:@"GeoPoint",@"latitude": latLon[0],@"longitude":latLon[1]};
+            NSArray *latLon;
+            id lat;
+            id lon;
+
+            if ([data isKindOfClass:[NSString class]])
+            {
+                latLon = [(NSString *)data componentsSeparatedByString:@","];
+                lat = [(NSString *)latLon[0] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+                lon = [(NSString *)latLon[1] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+            }
+            else
+            {
+                latLon = data;
+                lat = latLon[0];
+                lon = latLon[1];
+            }
+
+            if ([lat isKindOfClass:[NSString class]])
+            {
+                lat = @([(NSString *)lat doubleValue]);
+            }
+
+            if ([lon isKindOfClass:[NSString class]])
+            {
+                lon = @([(NSString *)lon doubleValue]);
+            }
+
+            return @{ParseRestKey_type:@"GeoPoint",@"latitude":lat ,@"longitude":lon};
         }
 
         NSString *className = fieldInfo[BackandRestKey_object];
@@ -219,9 +249,10 @@ static NSString *const ParseRestKey_Object = @"Object";
         {
 
             if ([data isKindOfClass:[NSNull class]] ||
-                ([data isKindOfClass:[NSString class]] && ((NSString *)data).length == 0))
+                ([data isKindOfClass:[NSString class]] /*&& ((NSString *)data).length == 0*/ ))
             {
-                return @{ParseRestKey_type:@"Relation",ParseRestKey_className:className};
+                NSString *viaField = fieldInfo[@"via"];
+                return @{ParseRestKey_type:@"Relation", ParseRestKey_className:className, ParseRestKey_viaField:viaField};
             }
 
             NSArray *objects = data;
@@ -282,6 +313,13 @@ static NSString *const ParseRestKey_Object = @"Object";
             PFConsistencyAssert(!relatedObjects || [relatedObjects isKindOfClass:[NSDictionary class]], @"hmmm. expected relatedObjects to be a dictionary...");
 
             return @{@"results":[self patchIncomingResponseDataFromBackand:resultsArray fieldInfo:nil relatedObjects:relatedObjects]};
+        }
+        else if (dataDict[@"__cloudCodeResult"])
+        {
+            // This is the top level of a CloudCode function response...
+            NSDictionary *cloudCodeResult = dataDict[@"__cloudCodeResult"];
+
+            return @{@"result":[self patchIncomingResponseDataFromBackand:cloudCodeResult fieldInfo:nil relatedObjects:nil]};
         }
         else
         {

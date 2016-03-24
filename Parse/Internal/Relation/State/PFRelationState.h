@@ -19,6 +19,7 @@
 @property (nonatomic, copy, readonly) NSString *targetClass;
 @property (nonatomic, copy, readonly) NSSet *knownObjects;
 @property (nonatomic, copy, readonly) NSString *key;
+@property (nonatomic, copy, readonly) NSString *viaField; //for use by Backand
 
 ///--------------------------------------
 #pragma mark - Init

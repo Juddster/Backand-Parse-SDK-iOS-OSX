@@ -22,6 +22,5 @@
 + (ParseManager *)_currentManager;
 + (void)_clearCurrentManager;
 
-+ (BOOL)usingBackand;
 + (NSString *)getBackandSignupToken;
 @end
